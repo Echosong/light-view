@@ -54,10 +54,10 @@
 
   // 选中菜单，页面跳转
   function onSelectMenu(menuItem) {
-    selectedKeys.value = [menuItem.menuId.toString()];
+    selectedKeys.value = [menuItem.id.toString()];
     if (menuItem.menuType === MENU_TYPE_ENUM.MENU.value && (_.isEmpty(menuItem.children) || menuItem.children.every((e) => !e.visibleFlag))) {
-      useUserStore().deleteKeepAliveIncludes(menuItem.menuId.toString());
-      router.push({ name: menuItem.menuId.toString() });
+      useUserStore().deleteKeepAliveIncludes(menuItem.id.toString());
+      router.push({ name: menuItem.id.toString() });
     }
     menuEmitter.emit('selectTopMenu', menuItem);
   }
@@ -65,7 +65,7 @@
   // 更新选中的菜单
   function updateSelectKey(key) {
     selectedKeys.value = [key];
-    let selectMenu = _.find(menuTree.value, { menuId: Number(key) });
+    let selectMenu = _.find(menuTree.value, { id: Number(key) });
     if (selectMenu) {
       menuEmitter.emit('selectTopMenu', selectMenu);
     }

@@ -69,18 +69,7 @@
       <!---- 回到顶部 --->
       <a-back-top :target="backTopTarget" :visibilityHeight="80" />
     </a-layout>
-    <!-- 右侧帮助文档 help-doc -->
-    <a-layout-sider
-      v-if="helpDocFlag"
-      v-show="helpDocExpandFlag"
-      theme="light"
-      :width="180"
-      class="help-doc-sider"
-      :trigger="null"
-      style="min-height: 100%"
-    >
-      <SideHelpDoc />
-    </a-layout-sider>
+
   </a-layout>
 </template>
 <script setup>
@@ -95,7 +84,6 @@
   import watermark from '../lib/smart-watermark';
   import { useAppConfigStore } from '/@/store/modules/system/app-config';
   import { useUserStore } from '/@/store/modules/system/user';
-  import SideHelpDoc from './components/side-help-doc/index.vue';
   import { useRouter } from 'vue-router';
   import { HOME_PAGE_NAME } from '/@/constants/system/home-const';
 

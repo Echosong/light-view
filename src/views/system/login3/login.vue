@@ -106,10 +106,8 @@ async function onLogin() {
       // 密码加密
       loginObj.password = encryptByBase64(loginObj.password);
       const res = await loginApi.login(loginObj);
-
-
       stopRefrestCaptchaInterval();
-      localSave(LocalStorageKeyConst.USER_TOKEN, res.data.tokenValue ? res.data.tokenValue : '');
+      localSave(LocalStorageKeyConst.USER_TOKEN, res.data.token ? res.data.token : '');
       message.success('登录成功');
       //更新用户信息到pinia
       useUserStore().setUserLoginInfo(res.data);

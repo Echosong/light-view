@@ -29,6 +29,7 @@ export const useUserStore = defineStore({
     username: '',
     //姓名
     name: '',
+    actualName:'',
     //手机号
     phone: '',
     //部门id
@@ -138,7 +139,7 @@ export const useUserStore = defineStore({
       this.roleId = data.roleId;
       this.roleName = data.roleName;
       this.loginIp = data.loginIp;
-
+      this.actualName = data.name;
       //菜单权限
       this.menuTree = buildMenuTree(data.menuList);
 

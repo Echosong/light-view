@@ -40,6 +40,8 @@
   function updateSelectKeyAndOpenKey() {
     // 第一步，根据路由 更新选中 顶级菜单
     let parentList = useUserStore().menuParentIdListMap.get(currentRoute.name) || [];
+    console.log("顶级", parentList, currentRoute.name)
+
     if (parentList.length === 0) {
       topMenuRef.value.updateSelectKey(currentRoute.name);
       return;

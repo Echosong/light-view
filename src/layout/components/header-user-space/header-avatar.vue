@@ -78,7 +78,7 @@
 
   const avatarName = ref('');
   const avatar = computed(() => useUserStore().avatar);
-  const actualName = computed(() => useUserStore().actualName);
+  const actualName = computed(() => useUserStore().name);
 
   // 更新头像信息
   function updateAvatar() {
