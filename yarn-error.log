@@ -1,0 +1,98 @@
+Arguments: 
+  D:\soft\node.exe C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @vueuse/core
+
+PATH: 
+  E:\BtSoft\php\73;C:\Program Files (x86)\Common Files\NetSarang;C:\Program Files\Common Files\Microsoft Shared\Microsoft Online Services;C:\Program Files (x86)\Common Files\Microsoft Shared\Microsoft Online Services;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\soft\Git\cmd;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\python;C:\Program Files\python\Scripts;E:\BtSoft\panel\script;C:\Program Files (x86)\PuTTY\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;E:\goproject;E:\gcc\mingw64\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Windows\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;E:\flutter\bin;E:\app\an-sdk;E:\goproject\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\sdk\7.0.305;C:\java\1.8\bin;C:\Users\Administrator\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\soft\;D:\soft\svn\bin;E:\goapp\bin;E:\Windows Kits\10\Windows Performance Toolkit\;C:\Users\Administrator\.cargo\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;C:\Users\Administrator\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Local\Programs\Fiddler;C:\Users\Administrator\.dotnet\tools;E:\BtSoft\php\73;D:\apache-maven-3.8.1\bin;E:\soft\GoLand 2021.2.3\bin;C:\Users\Administrator\go\bin;E:\soft\Fiddler;C:\Program Files\Azure Data Studio\bin;C:\Users\Administrator\.dotnet\tools;E:\soft\PyCharm 2022.2.2\bin;;C:\Program Files\dotnet;E:\soft\Git\bin;C:\Users\Administrator\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;C:\Users\Administrator\AppData\Roaming\npm;D:\soft\GoLand 2023.2.2\bin;;D:\soft\PhpStorm 2023.2.2\bin;;C:\Users\Administrator\go\bin;D:\项目资料\开源相关\smart-admin\smart-admin-web\javascript-ant-design-vue3\node_modules\.bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.18.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'D:\项目资料\开源相关\smart-admin\smart-admin-web\javascript-ant-design-vue3\node_modules\@esbuild\win32-x64\esbuild.exe'
+
+npm manifest: 
+  {
+    "name": "LightAdmin",
+    "version": "3.0.0",
+    "author": {
+      "name": "1024创新实验室（1024lab）",
+      "email": "lab1024@163.com",
+      "url": "https://www.1024lab.net"
+    },
+    "license": "MIT",
+    "homepage": "https://LightAdmin.1024lab.net",
+    "scripts": {
+      "localhost": "vite --mode localhost",
+      "dev": "vite",
+      "build:test": "vite build  --base=/admin/ --mode test",
+      "build:pre": "vite build  --mode pre",
+      "build:prod": "vite build  --mode production"
+    },
+    "type": "module",
+    "dependencies": {
+      "@ant-design/icons-vue": "^6.1.0",
+      "@wangeditor/editor": "5.1.14",
+      "@wangeditor/editor-for-vue": "5.1.12",
+      "ant-design-vue": "4.2.1",
+      "axios": "1.6.8",
+      "clipboard": "2.0.11",
+      "crypto-js": "4.1.1",
+      "decimal.js": "10.3.1",
+      "diff": "5.2.0",
+      "diff2html": "3.4.47",
+      "echarts": "5.4.3",
+      "highlight.js": "11.8.0",
+      "lodash": "4.17.21",
+      "lunar-javascript": "1.6.12",
+      "mitt": "3.0.1",
+      "nprogress": "0.2.0",
+      "pinia": "2.1.7",
+      "sm-crypto": "0.3.13",
+      "sortablejs": "1.15.0",
+      "ua-parser-js": "1.0.35",
+      "v-viewer": "~1.6.4",
+      "vue": "3.4.27",
+      "vue-i18n": "9.13.1",
+      "vue-router": "4.3.2",
+      "vue3-json-viewer": "2.2.2",
+      "vue3-tabs-chrome": "^0.3.3"
+    },
+    "devDependencies": {
+      "@vitejs/plugin-vue": "5.0.4",
+      "@vue/compiler-sfc": "3.4.27",
+      "eslint": "^8.16.0",
+      "eslint-config-prettier": "~9.0.0",
+      "eslint-plugin-prettier": "~5.0.0",
+      "eslint-plugin-vue": "~9.17.0",
+      "less": "~4.2.0",
+      "less-loader": "~11.1.3",
+      "prettier": "~3.0.2",
+      "rimraf": "~5.0.1",
+      "stylelint": "~14.8.5",
+      "stylelint-config-prettier": "~9.0.3",
+      "stylelint-config-standard": "~25.0.0",
+      "stylelint-order": "~5.0.0",
+      "terser": "~5.29.2",
+      "vite": "5.2.12",
+      "vue-eslint-parser": "~9.4.2"
+    },
+    "engines": {
+      "node": ">=18"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/1024-lab/smart-admin.git"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
