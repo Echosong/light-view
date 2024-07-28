@@ -16,18 +16,18 @@
     :theme="theme"
     :inlineCollapsed="collapsed"
   >
-    <template v-for="item in menuTree" :key="item.menuId">
-      <template v-if="item.visibleFlag && !item.disabledFlag">
+    <template v-for="item in menuTree" :key="item.id">
+      <template v-if="item.show">
         <template v-if="$lodash.isEmpty(item.children)">
-          <a-menu-item :key="item.menuId" @click="turnToPage(item)">
+          <a-menu-item :key="item.id" @click="turnToPage(item)">
             <template #icon>
               <component :is="$antIcons[item.icon]" />
             </template>
-            {{ item.menuName }}
+            {{ item.name }}个
           </a-menu-item>
         </template>
         <template v-else>
-          <SubMenu :menu-info="item" :key="item.menuId" @turnToPage="turnToPage" />
+          <SubMenu :menu-info="item" :key="item.id" @turnToPage="turnToPage" />
         </template>
       </template>
     </template>
@@ -53,6 +53,8 @@
 
   const menuTree = computed(() => useUserStore().getMenuTree || []);
 
+  console.log("到这个菜单了xxx", useUserStore().getMenuTree  )
+
   //展开的菜单
   let currentRoute = useRoute();
   const selectedKeys = ref([]);
@@ -60,7 +62,7 @@
 
   // 页面跳转
   function turnToPage(menu) {
-    useUserStore().deleteKeepAliveIncludes(menu.menuId.toString());
+    useUserStore().deleteKeepAliveIncludes(menu.id.toString());
     router.push({ path: menu.path });
   }
 
