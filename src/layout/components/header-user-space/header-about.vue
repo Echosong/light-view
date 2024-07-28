@@ -11,7 +11,8 @@
 <template>
   <a-dropdown class="header-trigger">
     <div class="wrapper">
-      <span class="name">版本信息</span>
+      <ExclamationCircleOutlined />
+      <span class="name">版本</span>
     </div>
     <template #overlay>
       <a-menu :class="['avatar-menu']">

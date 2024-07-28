@@ -144,7 +144,9 @@ export function buildRoutes(menuRouterList) {
       route.component = modules[relativePath];
     }
     routerList.push(route);
-    routerMap.set(e.menuId.toString(), route);
+    routerMap.set(e.id.toString(), route);
+
+    console.log("路由处理", routerMap)
   }
 
   //2、添加到路由里

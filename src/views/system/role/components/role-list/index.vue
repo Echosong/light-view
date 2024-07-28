@@ -14,15 +14,15 @@
       <a-button type="primary" size="small" @click="showRoleFormModal" v-privilege="'system:role:add'">添加</a-button>
     </template>
     <a-menu mode="vertical" v-model:selectedKeys="selectedKeys">
-      <a-menu-item v-for="item in roleList" :key="item.roleId">
+      <a-menu-item v-for="item in roleList" :key="item.id">
         <a-popover placement="right">
           <template #content>
             <div style="display: flex; flex-direction: column">
-              <a-button type="text" @click="deleteRole(item.roleId)" v-privilege="'system:role:delete'">删除</a-button>
+              <a-button type="text" @click="deleteRole(item.id)" v-privilege="'system:role:delete'">删除</a-button>
               <a-button type="text" @click="showRoleFormModal(item)" v-privilege="'system:role:update'">编辑</a-button>
             </div>
           </template>
-          {{ item.roleName }}
+          {{ item.name }}
         </a-popover>
       </a-menu-item>
     </a-menu>

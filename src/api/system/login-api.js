@@ -21,7 +21,7 @@ export const loginApi = {
    * 退出登录 @author 卓大
    */
   logout: () => {
-    return getRequest('/login/logout');
+    return getRequest('/user/logout');
   },
 
   /**
@@ -35,6 +35,6 @@ export const loginApi = {
    * 获取登录信息 @author 卓大
    */
   getLoginInfo: () => {
-    return getRequest('/login/getLoginInfo');
+    return getRequest('/user/getLoginInfo');
   },
 };

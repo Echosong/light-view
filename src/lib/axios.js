@@ -113,6 +113,10 @@ smartAxios.interceptors.response.use(
 export const getRequest = (url, params) => {
   return request({ url, method: 'get', params });
 };
+export const deleteRequest = (url, params) => {
+  return request({ url, method: 'delete', params });
+};
+
 
 /**
  * 通用请求封装
@@ -130,6 +134,18 @@ export const postRequest = (url, data) => {
     data,
     url,
     method: 'post',
+  });
+};
+
+
+/**
+ * put 请求
+ */
+export const putRequest = (url, data) => {
+  return request({
+    data,
+    url,
+    method: 'put',
   });
 };
 

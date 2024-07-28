@@ -7,32 +7,27 @@
  * @Email:     lab1024@163.com
  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
  */
-import { getRequest, postRequest } from '/src/lib/axios';
+import { getRequest, deleteRequest, postRequest, putRequest } from '/src/lib/axios';
 
 export const roleApi = {
   /**
    * @description: 获取所有角色
    */
   queryAll: () => {
-    return getRequest('/role/getAll');
+    return putRequest('/role/list');
   },
-  /**
-   * @description:添加角色
-   */
-  addRole: (data) => {
-    return postRequest('/role/add', data);
-  },
+
   /**
    * @description:更新角色
    */
   updateRole: (data) => {
-    return postRequest('/role/update', data);
+    return postRequest('/role/save', data);
   },
   /**
    * @description: 删除角色
    */
   deleteRole: (roleId) => {
-    return getRequest(`/role/delete/${roleId}`);
+    return deleteRequest(`/role/delete/${roleId}`);
   },
   /**
    * @description: 批量设置某角色数据范围
