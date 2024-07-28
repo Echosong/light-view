@@ -11,22 +11,22 @@
   <div class="recursion-container" v-show="topMenu.children && topMenu.children.length > 0">
     <!-- 顶部顶级菜单名称 -->
     <div class="top-menu">
-      <span class="ant-menu">{{ topMenu.menuName }}</span>
+      <span class="ant-menu">{{ topMenu.name }}</span>
     </div>
     <!-- 次级菜单展示 -->
     <a-menu :selectedKeys="selectedKeys" :openKeys="openKeys" mode="inline">
-      <template v-for="item in topMenu.children" :key="item.menuId">
-        <template v-if="item.visibleFlag">
+      <template v-for="item in topMenu.children" :key="item.id">
+        <template v-if="item.show">
           <template v-if="$lodash.isEmpty(item.children)">
-            <a-menu-item :key="item.menuId.toString()" @click="turnToPage(item)">
+            <a-menu-item :key="item.id.toString()" @click="turnToPage(item)">
               <template #icon v-if="item.icon">
                 <component :is="$antIcons[item.icon]" />
               </template>
-              {{ item.menuName }}
+              {{ item.name }}
             </a-menu-item>
           </template>
           <template v-else>
-            <SubMenu :menu-info="item" :key="item.menuId" @turnToPage="turnToPage" />
+            <SubMenu :menu-info="item" :key="item.id" @turnToPage="turnToPage" />
           </template>
         </template>
       </template>
@@ -50,7 +50,7 @@
   function onSelectTopMenu(selectedTopMenu) {
     topMenu.value = selectedTopMenu;
     if (selectedTopMenu.children && selectedTopMenu.children.length > 0) {
-      openKeys.value = _.map(selectedTopMenu.children, 'menuId').map((e) => e.toString());
+      openKeys.value = _.map(selectedTopMenu.children, 'id').map((e) => e.toString());
     } else {
       openKeys.value = [];
     }
@@ -72,8 +72,8 @@
 
   // 页面跳转
   function turnToPage(route) {
-    useUserStore().deleteKeepAliveIncludes(route.menuId.toString());
-    router.push({ name: route.menuId.toString() });
+    useUserStore().deleteKeepAliveIncludes(route.id.toString());
+    router.push({ name: route.id.toString() });
   }
 
   function goHome() {

@@ -16,13 +16,13 @@
     </div>
     <!-- 一级菜单展示 -->
     <a-menu :selectedKeys="selectedKeys" mode="inline" :theme="theme">
-      <template v-for="item in menuTree" :key="item.menuId">
-        <template v-if="item.visibleFlag">
-          <a-menu-item :key="item.menuId.toString()" @click="onSelectMenu(item)">
+      <template v-for="item in menuTree" :key="item.id">
+        <template v-if="item.show">
+          <a-menu-item :key="item.id.toString()" @click="onSelectMenu(item)">
             <template #icon>
               <component :is="$antIcons[item.icon]" />
             </template>
-            {{ menuNameAdapter(item.menuName) }}
+            {{ menuNameAdapter(item.name) }}
           </a-menu-item>
         </template>
       </template>
@@ -55,7 +55,7 @@
   // 选中菜单，页面跳转
   function onSelectMenu(menuItem) {
     selectedKeys.value = [menuItem.id.toString()];
-    if (menuItem.menuType === MENU_TYPE_ENUM.MENU.value && (_.isEmpty(menuItem.children) || menuItem.children.every((e) => !e.visibleFlag))) {
+    if (menuItem.type === MENU_TYPE_ENUM.MENU.value && (_.isEmpty(menuItem.children) || menuItem.children.every((e) => !e.visibleFlag))) {
       useUserStore().deleteKeepAliveIncludes(menuItem.id.toString());
       router.push({ name: menuItem.id.toString() });
     }
