@@ -228,7 +228,7 @@
       okType: 'danger',
       onOk() {
         console.log('OK');
-        const menuIdList = menuArray.map((e) => e.menuId);
+        const menuIdList = menuArray.map((e) => e.id);
         requestBatchDelete(menuIdList);
         selectedRows = [];
       },

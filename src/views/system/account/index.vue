@@ -3,12 +3,12 @@
     <!--菜单列-->
     <div class="account-menu-list">
       <a-menu v-model:selectedKeys="selectedKeys" mode="inline" @click="selectMenu($event.key)">
-        <a-menu-item v-for="item in menuList" :key="item.menuId">
-          <span v-if="item.menuId === 'message'">
+        <a-menu-item v-for="item in menuList" :key="item.id">
+          <span v-if="item.id === 'message'">
             {{ item.menuName }}
             <a-badge :count="unreadMessageCount" style="margin-left: 10px" />
           </span>
-          <span v-if="item.menuId !== 'message'">{{ item.menuName }} </span>
+          <span v-if="item.id !== 'message'">{{ item.menuName }} </span>
         </a-menu-item>
       </a-menu>
     </div>
@@ -32,11 +32,11 @@
   // 选中的菜单
   let selectedMenu = ref({ menuId: 0 });
   let selectedKeys = computed(() => {
-    return _.isEmpty(selectedMenu.value) ? [] : [selectedMenu.value.menuId];
+    return _.isEmpty(selectedMenu.value) ? [] : [selectedMenu.value.id];
   });
 
   function selectMenu(menuId) {
-    selectedMenu.value = menuList.value.find((e) => e.menuId === menuId);
+    selectedMenu.value = menuList.value.find((e) => e.id === menuId);
   }
 
   // ------------------------- 未读消息数量  -------------------------
@@ -51,11 +51,11 @@
       return;
     }
     let menuId;
-    if (route.query.menuId) {
-      menuId = route.query.menuId;
+    if (route.query.id) {
+      menuId = route.query.id;
     } else {
       let firstMenu = menuList.value[0];
-      menuId = firstMenu.menuId;
+      menuId = firstMenu.id;
     }
     selectMenu(menuId);
   });
@@ -64,11 +64,11 @@
     () => route.query,
     (newQuery, oldQuery) => {
       let menuId;
-      if (route.query.menuId) {
-        menuId = route.query.menuId;
+      if (route.query.id) {
+        menuId = route.query.id;
       } else {
         let firstMenu = menuList.value[0];
-        menuId = firstMenu.menuId;
+        menuId = firstMenu.id;
       }
       selectMenu(menuId);
     }

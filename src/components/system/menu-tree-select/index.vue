@@ -61,7 +61,7 @@
    * 根据id集合，获取菜单集合
    */
   function getMenuListByIdList(menuIdList) {
-    return _.cloneDeep(menuList.filter((e) => menuIdList.indexOf(e.menuId) > -1));
+    return _.cloneDeep(menuList.filter((e) => menuIdList.indexOf(e.id) > -1));
   }
 
   function onSelectChange(e) {

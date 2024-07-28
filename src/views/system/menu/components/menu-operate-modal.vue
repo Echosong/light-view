@@ -11,7 +11,7 @@
   <a-drawer
     :body-style="{ paddingBottom: '80px' }"
     :maskClosable="true"
-    :title="form.menuId ? '编辑' : '添加'"
+    :title="form.id ? '编辑' : '添加'"
     :open="visible"
     :width="600"
     @close="onClose"
@@ -98,7 +98,7 @@
     <div class="footer">
       <a-button style="margin-right: 8px" @click="onClose">取消</a-button>
       <a-button style="margin-right: 8px" type="primary" @click="onSubmit(false)">提交 </a-button>
-      <a-button v-if="!form.menuId" type="primary" @click="onSubmit(true)">提交并添加下一个 </a-button>
+      <a-button v-if="!form.id" type="primary" @click="onSubmit(true)">提交并添加下一个 </a-button>
     </div>
   </a-drawer>
 </template>
@@ -245,12 +245,12 @@
       if (!params.parentId) {
         params.parentId = 0;
       }
-      if (params.menuId) {
+      if (params.id) {
         await menuApi.updateMenu(params);
       } else {
         await menuApi.addMenu(params);
       }
-      message.success(`${params.menuId ? '修改' : '添加'}成功`);
+      message.success(`${params.id ? '修改' : '添加'}成功`);
       if (continueFlag) {
         continueResetForm();
       } else {

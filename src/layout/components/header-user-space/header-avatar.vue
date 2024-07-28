@@ -21,7 +21,7 @@
         <a-menu-item @click="toAccount()">
           <span>个人中心</span>
         </a-menu-item>
-        <a-menu-item @click="toAccount(ACCOUNT_MENU.PASSWORD.menuId)">
+        <a-menu-item @click="toAccount(ACCOUNT_MENU.PASSWORD.id)">
           <span>修改密码</span>
         </a-menu-item>
         <a-menu-item @click="onLogout">

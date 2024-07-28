@@ -17,23 +17,7 @@
         <a-button class="button-style" v-if="selectRoleId" type="primary" @click="onSearch">搜索</a-button>
         <a-button class="button-style" v-if="selectRoleId" type="default" @click="resetQueryRoleEmployee">重置</a-button>
       </div>
-
-      <div>
-        <a-button class="button-style" v-if="selectRoleId" type="primary" @click="addRoleEmployee" v-privilege="'system:role:employee:add'"
-          >添加员工</a-button
-        >
-        <a-button
-          class="button-style"
-          v-if="selectRoleId"
-          type="primary"
-          danger
-          @click="batchDelete"
-          v-privilege="'system:role:employee:batch:delete'"
-          >批量移除</a-button
-        >
-      </div>
     </div>
-
     <a-table
       :loading="tableLoading"
       :dataSource="tableData"
@@ -41,7 +25,6 @@
       :pagination="false"
       :scroll="{ y: 400 }"
       rowKey="employeeId"
-      :row-selection="{ selectedRowKeys: selectedRowKeyList, onChange: onSelectChange }"
       size="small"
       bordered
     >
@@ -76,12 +59,10 @@
   </div>
 </template>
 <script setup>
-  import { message, Modal } from 'ant-design-vue';
-  import _ from 'lodash';
-  import { computed, inject, onMounted, reactive, ref, watch } from 'vue';
-  import { roleApi } from '/src/api/system/role-api';
+
+  import {  inject, onMounted, reactive, ref, watch } from 'vue';
+  import { userApi } from '/src/api/system/user-api';
   import { PAGE_SIZE, showTableTotal, PAGE_SIZE_OPTIONS } from '/src/constants/common-const';
-  import { SmartLoading } from '/src/components/framework/smart-loading';
   import EmployeeTableSelectModal from '/src/components/system/employee-table-select-modal/index.vue';
   import { smartSentry } from '/src/lib/smart-sentry';
 
@@ -125,8 +106,8 @@
     try {
       tableLoading.value = true;
       queryForm.roleId = selectRoleId.value;
-      let res = await roleApi.queryRoleEmployee(queryForm);
-      tableData.value = res.data.list;
+      let res = await userApi.listPage(queryForm);
+      tableData.value = res.data.content;
       total.value = res.data.total;
     } catch (e) {
       smartSentry.captureError(e);
@@ -138,127 +119,25 @@
   const columns = reactive([
     {
       title: '姓名',
-      dataIndex: 'actualName',
+      dataIndex: 'name',
     },
     {
       title: '手机号',
-      dataIndex: 'phone',
+      dataIndex: 'mobile',
     },
     {
       title: '登录账号',
-      dataIndex: 'loginName',
+      dataIndex: 'username',
     },
     {
       title: '部门',
-      dataIndex: 'departmentName',
+      dataIndex: 'roleName',
     },
     {
       title: '状态',
-      dataIndex: 'disabledFlag',
-    },
-    {
-      title: '操作',
-      dataIndex: 'operate',
-      width: 60,
-    },
+      dataIndex: 'stateEnum',
+    }
   ]);
-
-  // ----------------------- 添加成员 ---------------------------------
-  const selectEmployeeModal = ref();
-
-  async function addRoleEmployee() {
-    let res = await roleApi.getRoleAllEmployee(selectRoleId.value);
-    let selectedIdList = res.data.map((e) => e.roleId) || [];
-    selectEmployeeModal.value.showModal(selectedIdList);
-  }
-
-  async function selectData(list) {
-    if (_.isEmpty(list)) {
-      message.warning('请选择角色人员');
-      return;
-    }
-    SmartLoading.show();
-    try {
-      let params = {
-        employeeIdList: list,
-        roleId: selectRoleId.value,
-      };
-      await roleApi.batchAddRoleEmployee(params);
-      message.success('添加成功');
-      await queryRoleEmployee();
-    } catch (e) {
-      smartSentry.captureError(e);
-    } finally {
-      SmartLoading.hide();
-    }
-  }
-
-  // ----------------------- 移除成员 ---------------------------------
-  // 删除角色成员方法
-  async function deleteEmployeeRole(employeeId) {
-    Modal.confirm({
-      title: '提示',
-      content: '确定要删除该角色成员么？',
-      okText: '确定',
-      okType: 'danger',
-      async onOk() {
-        SmartLoading.show();
-        try {
-          await roleApi.deleteEmployeeRole(employeeId, selectRoleId.value);
-          message.success('移除成功');
-          await queryRoleEmployee();
-        } catch (e) {
-          smartSentry.captureError(e);
-        } finally {
-          SmartLoading.hide();
-        }
-      },
-      cancelText: '取消',
-      onCancel() {},
-    });
-  }
-
-  // ----------------------- 批量删除 ---------------------------------
-
-  const selectedRowKeyList = ref([]);
-  const hasSelected = computed(() => selectedRowKeyList.value.length > 0);
-
-  function onSelectChange(selectedRowKeys) {
-    selectedRowKeyList.value = selectedRowKeys;
-  }
-
-  // 批量移除
-  function batchDelete() {
-    if (!hasSelected.value) {
-      message.warning('请选择要删除的角色成员');
-      return;
-    }
-    Modal.confirm({
-      title: '提示',
-      content: '确定移除这些角色成员吗？',
-      okText: '确定',
-      okType: 'danger',
-      async onOk() {
-        SmartLoading.show();
-        try {
-          let params = {
-            employeeIdList: selectedRowKeyList.value,
-            roleId: selectRoleId.value,
-          };
-          await roleApi.batchRemoveRoleEmployee(params);
-          message.success('移除成功');
-          selectedRowKeyList.value = [];
-          await queryRoleEmployee();
-        } catch (e) {
-          smartSentry.captureError(e);
-        } finally {
-          SmartLoading.hide();
-        }
-      },
-      cancelText: '取消',
-      onCancel() {},
-    });
-  }
 </script>
 
 <style scoped lang="less">

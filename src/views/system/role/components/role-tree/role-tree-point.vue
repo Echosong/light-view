@@ -11,8 +11,8 @@
 <template>
   <div class="point">
     <div class="point-label">
-      <template v-for="module in props.tree" :key="module.menuId">
-        <a-checkbox @change="emits('selectCheckbox', module)" :value="module.menuId">{{ module.menuName }} </a-checkbox>
+      <template v-for="module in props.tree" :key="module.id">
+        <a-checkbox @change="emits('selectCheckbox', module)" :value="module.id">{{ module.menuName }} </a-checkbox>
       </template>
     </div>
   </div>

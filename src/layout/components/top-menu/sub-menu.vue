@@ -8,15 +8,15 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-sub-menu :key="menuInfo.menuId">
+  <a-sub-menu :key="menuInfo.id">
     <template #icon>
       <component :is="$antIcons[menuInfo.icon]" />
     </template>
     <template #title>{{ menuInfo.menuName }}</template>
-    <template v-for="item in menuInfo.children" :key="item.menuId">
+    <template v-for="item in menuInfo.children" :key="item.id">
       <template v-if="item.visibleFlag && !item.disabledFlag">
         <template v-if="!item.children">
-          <a-menu-item :key="item.menuId" @click="turnToPage(item)">
+          <a-menu-item :key="item.id" @click="turnToPage(item)">
             <template #icon>
               <component :is="$antIcons[item.icon]" />
             </template>
@@ -24,7 +24,7 @@
           </a-menu-item>
         </template>
         <template v-else>
-          <SubMenu :menu-info="item" :key="item.menuId" @turnToPage="turnToPage" />
+          <SubMenu :menu-info="item" :key="item.id" @turnToPage="turnToPage" />
         </template>
       </template>
     </template>

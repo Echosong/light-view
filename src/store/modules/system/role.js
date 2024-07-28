@@ -31,9 +31,9 @@ export const useRoleStore = defineStore({
     },
     // 选中本级以及子级
     addCheckedDataAndChildren(data) {
-      let findIndex = this.checkedData.findIndex((val) => val === data.menuId);
-      if (data.menuId && findIndex === -1) {
-        this.addCheckedData(data.menuId);
+      let findIndex = this.checkedData.findIndex((val) => val === data.id);
+      if (data.id && findIndex === -1) {
+        this.addCheckedData(data.id);
       }
       if (data.children) {
         data.children.forEach((item) => {
@@ -47,7 +47,7 @@ export const useRoleStore = defineStore({
     },
     // 取消选中本级以及子级
     deleteCheckedDataAndChildren(data) {
-      let findIndex = this.checkedData.findIndex((val) => val === data.menuId);
+      let findIndex = this.checkedData.findIndex((val) => val === data.id);
       if (findIndex !== -1) {
         this.deleteCheckedData(findIndex);
       }
@@ -60,10 +60,10 @@ export const useRoleStore = defineStore({
     // 初始化权限树对象
     initTreeMap(tree) {
       for (let treeElement of tree) {
-        if (!treeElement.menuId) {
+        if (!treeElement.id) {
           continue;
         }
-        this.treeMap.set(treeElement.menuId, treeElement);
+        this.treeMap.set(treeElement.id, treeElement);
         if (treeElement.children && !_.isEmpty(treeElement.children)) {
           this.initTreeMap(treeElement.children);
         }
@@ -82,9 +82,9 @@ export const useRoleStore = defineStore({
         return;
       }
       // 选中父级
-      let parentIndex = this.checkedData.findIndex((e) => parentModule.menuId === e);
-      if (parentModule.menuId && parentIndex === -1) {
-        this.addCheckedData(parentModule.menuId);
+      let parentIndex = this.checkedData.findIndex((e) => parentModule.id === e);
+      if (parentModule.id && parentIndex === -1) {
+        this.addCheckedData(parentModule.id);
       }
       // 如果上级还有上级 则进行递归
       if (parentModule.parentId) {

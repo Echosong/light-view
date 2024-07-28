@@ -15,10 +15,10 @@
     mode="horizontal"
     :theme="theme"
   >
-    <template v-for="item in menuTree" :key="item.menuId">
+    <template v-for="item in menuTree" :key="item.id">
       <template v-if="item.visibleFlag && !item.disabledFlag">
         <template v-if="$lodash.isEmpty(item.children)">
-          <a-menu-item :key="item.menuId" @click="turnToPage(item)">
+          <a-menu-item :key="item.id" @click="turnToPage(item)">
             <template #icon>
               <component :is="$antIcons[item.icon]" />
             </template>
@@ -26,7 +26,7 @@
           </a-menu-item>
         </template>
         <template v-else>
-          <SubMenu :menu-info="item" :key="item.menuId" @turnToPage="turnToPage" />
+          <SubMenu :menu-info="item" :key="item.id" @turnToPage="turnToPage" />
         </template>
       </template>
     </template>
@@ -52,7 +52,7 @@
 
   // 页面跳转
   function turnToPage(menu) {
-    useUserStore().deleteKeepAliveIncludes(menu.menuId.toString());
+    useUserStore().deleteKeepAliveIncludes(menu.id.toString());
     router.push({ path: menu.path });
   }
 

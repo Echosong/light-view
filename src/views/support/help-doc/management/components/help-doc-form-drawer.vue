@@ -181,7 +181,7 @@
         ];
       } else {
         let relationList = menuTreeSelect.value.getMenuListByIdList(formData.relationIdList);
-        param.relationList = relationList.map((e) => Object.assign({}, { relationId: e.menuId, relationName: e.menuName }));
+        param.relationList = relationList.map((e) => Object.assign({}, { relationId: e.id, relationName: e.menuName }));
       }
 
       if (param.helpDocId) {

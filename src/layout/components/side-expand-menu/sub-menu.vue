@@ -16,7 +16,7 @@
     <template v-for="item in props.menuInfo.children" :key="item.id">
       <template v-if="item.show">
         <template v-if="!item.children">
-          <a-menu-item :key="item.menuId.toString()" @click="turnToPage(item)">
+          <a-menu-item :key="item.id.toString()" @click="turnToPage(item)">
             <template #icon>
               <component :is="$antIcons[item.icon]" />
             </template>

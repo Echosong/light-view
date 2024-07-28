@@ -38,7 +38,7 @@ export const buildMenuTableTree = (menuList) => {
   let topMenuList = [];
   const menuIdSet = new Set();
   for (const menu of menuList) {
-    menuIdSet.add(menu.menuId);
+    menuIdSet.add(menu.id);
   }
 
   for (const menu of menuList) {
@@ -60,7 +60,7 @@ export const buildMenuTableTree = (menuList) => {
  */
 function recursiveMenuTree(menuList, parentArray) {
   for (const parent of parentArray) {
-    const children = menuList.filter((e) => e.parentId === parent.menuId);
+    const children = menuList.filter((e) => e.parentId === parent.id);
     if (children.length > 0) {
       parent.children = children;
       recursiveMenuTree(menuList, parent.children);

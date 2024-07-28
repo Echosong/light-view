@@ -8,7 +8,7 @@
   * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
 -->
 <template>
-  <a-sub-menu :key="menuInfo.menuId">
+  <a-sub-menu :key="menuInfo.id">
     <template #icon>
       <component :is="$antIcons[menuInfo.icon]" />
     </template>
