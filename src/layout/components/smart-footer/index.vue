@@ -9,7 +9,7 @@
 -->
 <template>
   <div class="version">
-    <a target="_blank" class="smart-copyright" href="https://www.1024lab.net"> ©2012-{{ currentYear }} 河南·洛阳「1024创新实验室」 LightAdmin </a>
+    <a target="_blank" class="smart-copyright" href="http://www.hn1024.cn/"> ©2012-{{ currentYear }} 湖南·长沙「1024软件科技有限公司」 LightAdmin </a>
     <a target="_blank" class="smart-version" href="https://LightAdmin.vip/views/other/change-log.html"> V3.4.0 </a>
   </div>
 </template>

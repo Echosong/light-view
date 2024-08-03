@@ -246,8 +246,8 @@
       columnList = _.sortBy(columnList, (e) => e.sort);
 
       await tableColumnApi.updateTableColumn({
-        tableId,
-        columnList,
+        tableName: tableId,
+        columns: JSON.stringify(columnList),
       });
 
       message.success('保存成功');

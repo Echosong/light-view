@@ -21,7 +21,7 @@ export const appDefaultConfig = {
   // 顶部菜单页面宽度
   pageWidth: '99%',
   // 圆角
-  borderRadius: 6,
+  borderRadius: 1,
   // 标签页
   pageTagFlag: true,
   // 标签页样式: default、 antd
@@ -31,9 +31,9 @@ export const appDefaultConfig = {
   // 页脚
   footerFlag: true,
   // 帮助文档
-  helpDocFlag: true,
+  helpDocFlag: false,
   // 帮助文档默认展开
-  helpDocExpandFlag: true,
+  helpDocExpandFlag: false,
   // 水印
   watermarkFlag: true,
   // 网站名称

@@ -16,7 +16,7 @@ export const smartSentry = {
         if (error.config && error.data && error && error.headers && error.request && error.status) {
             return;
         }
-        // Sentry.captureException(error);
+        //Sentry.captureException(error);
         console.error(error);
     },
 };
