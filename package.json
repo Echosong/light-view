@@ -2,12 +2,12 @@
   "name": "LightAdmin",
   "version": "3.0.0",
   "author": {
-    "name": "1024创新实验室（1024lab）",
-    "email": "lab1024@163.com",
-    "url": "https://www.1024lab.net"
+    "name": "hz",
+    "email": "zq_songfeigang@163.com",
+    "url": "http://www.hn1024.cn/"
   },
   "license": "MIT",
-  "homepage": "https://LightAdmin.1024lab.net",
+  "homepage": "http://www.hn1024.cn/",
   "scripts": {
     "localhost": "vite --mode localhost",
     "dev": "vite",

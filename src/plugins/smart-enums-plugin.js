@@ -2,11 +2,11 @@
  * 枚举插件
  * 此插件为 1024创新实验室 自创的插件
  *
- * @Author:    1024创新实验室-主任：卓大
+ * @Author:    二胡子
  * @Date:      2022-09-06 20:51:03
  * @Wechat:    zhuda1024
- * @Email:     lab1024@163.com
- * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
+ * @Email:     zq_songfeigang@163.com
+ * @Copyright  1024创新实验室 （ http://www.hn1024.cn ），Since 2012
  */
 import _ from 'lodash';
 import { FLAG_NUMBER_ENUM } from '/@/constants/common-const';

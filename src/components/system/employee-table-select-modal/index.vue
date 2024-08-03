@@ -1,11 +1,11 @@
 <!--
   * 员工 表格 弹窗 选择框 
   * 
-  * @Author:    1024创新实验室-主任：卓大 
+  * @Author:    二胡子
   * @Date:      2022-08-19 23:09:02 
   * @Wechat:    zhuda1024 
-  * @Email:     lab1024@163.com 
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012 
+  * @Email:     zq_songfeigang@163.com
+  * @Copyright  1024创新实验室 （ http://www.hn1024.cn ），Since 2012
 -->
 <template>
   <a-modal v-model:open="visible" :width="900" title="选择人员" @cancel="closeModal" @ok="onSelectEmployee">

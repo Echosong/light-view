@@ -1,11 +1,11 @@
 <!--
   * 头部一整行
   *
-  * @Author:    1024创新实验室-主任：卓大
+  * @Author:    二胡子
   * @Date:      2022-09-06 20:18:20
   * @Wechat:    zhuda1024
-  * @Email:     lab1024@163.com
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
+  * @Email:     zq_songfeigang@163.com
+  * @Copyright  1024创新实验室 （ http://www.hn1024.cn ），Since 2012
 -->
 <template>
   <a-space :size="10">
@@ -78,7 +78,7 @@
 
   //搜索
   function search() {
-    //window.open('https://1024lab.net');
+    //window.open('http://www.hn1024.cn');
   }
 
   const { useToken } = theme;

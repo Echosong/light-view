@@ -22,7 +22,7 @@ npm manifest:
     "version": "3.0.0",
     "author": {
       "name": "1024创新实验室（1024lab）",
-      "email": "lab1024@163.com",
+      "email": "zq_songfeigang@163.com",
       "url": "https://www.1024lab.net"
     },
     "license": "MIT",

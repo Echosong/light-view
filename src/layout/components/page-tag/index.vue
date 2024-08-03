@@ -1,11 +1,11 @@
 <!--
   * 标签页 入口，支持三种模式：默认、a-tabs, chrome-tabs
   *
-  * @Author:    1024创新实验室-主任：卓大
+  * @Author:    二胡子
   * @Date:      2024-06-12 20:55:04
   * @Wechat:    zhuda1024
-  * @Email:     lab1024@163.com
-  * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
+  * @Email:     zq_songfeigang@163.com
+  * @Copyright  1024创新实验室 （ http://www.hn1024.cn ），Since 2012
 -->
 <template>
   <DefaultTab v-if="pageTagStyle === PAGE_TAG_ENUM.DEFAULT.value" />
