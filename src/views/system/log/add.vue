@@ -1,22 +1,21 @@
 
 <template>
-  <a-modal
-      :title="title"
-      width="600px"
-      :open="isShow"
-      @cancel="isShow = false"
-      :maskClosable="false"
-      :destroyOnClose="true"
-      forceRender
-  >
+    <a-drawer
+        :title="title"
+        :width="600"
+        :open="isShow"
+        :body-style="{ paddingBottom: '80px' }"
+        @close="isShow = false"
+        destroyOnClose
+    >
     <a-form ref="ruleForm" :model="m" :rules="rules" :label-col="{ span: 3 }">
       <a-form-item label="用户名称" name="positionName">
         <a-input style="width: 100%" v-model:value="m.username" placeholder="用户"/>
       </a-form-item>
       <a-form-item label="请求id" name="level">
-        <a-input style="width: 100%" v-model:value="m.requestIp" placeholder="请求ip"/>
+        <a-input  style="width: 100%" v-model:value="m.requestIp" placeholder="请求ip"/>
       </a-form-item>
-      <a-form-item label="方法名" name="sort">
+      <a-form-item label="方法名" name="sort" tooltip="输入方法信息">
         <a-input-number :min="0" :step="1" :precision="0" style="width: 100%" v-model:value="m.method"
                         placeholder="排序"/>
       </a-form-item>
@@ -31,7 +30,7 @@
         <a-button type="primary" @click="onSubmit">保存</a-button>
       </a-space>
     </template>
-  </a-modal>
+    </a-drawer>
 </template>
 <script setup>
 import {ref} from 'vue';

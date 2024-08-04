@@ -15,11 +15,13 @@ import _ from 'lodash';
 import LocalStorageKeyConst from '/@/constants/local-storage-key-const.js';
 
 // token的消息头
-const TOKEN_HEADER = 'x-access-token';
+const TOKEN_HEADER = 'Authorization';
 
 // 创建axios对象
 const smartAxios = axios.create({
   baseURL: "/admin",
+  timeout: 100000,
+  withCredentials: true,
 });
 
 // 退出系统
@@ -52,16 +54,16 @@ smartAxios.interceptors.request.use(
 // 添加响应拦截器
 smartAxios.interceptors.response.use(
   (response) => {
+    // 如果是json数据
+    if (response.data && response.data instanceof Blob) {
+      return response;
+    }
+
     // 根据content-type ，判断是否为 json 数据
     let contentType = response.headers['content-type'] ? response.headers['content-type'] : response.headers['Content-Type'];
     if (contentType.indexOf('application/json') === -1) {
       return Promise.resolve(response);
     }
-    // 如果是json数据
-    if (response.data && response.data instanceof Blob) {
-      return Promise.reject(response.data);
-    }
-
     // 如果是加密数据
     if (response.data.dataType === DATA_TYPE_ENUM.ENCRYPT.value) {
       response.data.encryptData = response.data.data;
@@ -80,7 +82,6 @@ smartAxios.interceptors.response.use(
         setTimeout(logout, 300);
         return Promise.reject(response);
       }else{
-        console.log("返回信息", res)
         message.destroy();
         message.error(res.message);
         return Promise.reject(res);
@@ -164,9 +165,9 @@ export const postEncryptRequest = (url, data) => {
 
 // ================================= 下载 =================================
 
-export const postDownload = function (url, data) {
+export const putDownload = function (url, data) {
   request({
-    method: 'post',
+    method: 'put',
     url,
     data,
     responseType: 'blob',
@@ -175,6 +176,7 @@ export const postDownload = function (url, data) {
       handleDownloadData(data);
     })
     .catch((error) => {
+      console.log("下载错误信息", error)
       handleDownloadError(error);
     });
 };
@@ -184,15 +186,14 @@ export const postDownload = function (url, data) {
  */
 export const getDownload = function (url, params) {
   request({
+    url: url,
     method: 'get',
-    url,
     params,
-    responseType: 'blob',
-  })
-    .then((data) => {
+    responseType: 'blob'
+  }).then((data) => {
+      message.info("导出走到了")
       handleDownloadData(data);
-    })
-    .catch((error) => {
+    }).catch((error) => {
       handleDownloadError(error);
     });
 };
@@ -203,9 +204,8 @@ function handleDownloadError(error) {
     fileReader.readAsText(error);
     fileReader.onload = () => {
       const msg = fileReader.result;
-      const jsonMsg = JSON.parse(msg);
       message.destroy();
-      message.error(jsonMsg.msg);
+      message.error(msg);
     };
   } else {
     message.destroy();

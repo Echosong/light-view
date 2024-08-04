@@ -1,4 +1,4 @@
-import {getRequest, postRequest, request, putRequest, deleteRequest} from '/src/lib/axios';
+import {getRequest, postRequest, request, putRequest, deleteRequest, putDownload} from '/src/lib/axios';
 import {Modal, message} from "ant-design-vue";
 
 export const base = {
@@ -26,6 +26,10 @@ export const base = {
             data: params,
             headers: {'Content-Type': 'multipart/form-data;charset=utf-8'},
         })
+    },
+
+    download: (url, params)=> {
+        putDownload(url, params)
     },
 
     confirm: (msg, callback)=> {

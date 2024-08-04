@@ -6,18 +6,20 @@
         <a-input style="width: 200px" v-model:value="p.keywords" placeholder="关键字查询"/>
       </a-form-item>
       <a-form-item class="smart-query-form-item">
-        <a-button type="primary" @click="f5">
-          <template #icon>
-            <SearchOutlined/>
-          </template>
-          查询
-        </a-button>
-        <a-button @click="resetQuery" class="smart-margin-left10">
-          <template #icon>
-            <ReloadOutlined/>
-          </template>
-          重置
-        </a-button>
+        <a-button-group>
+          <a-button type="primary" @click="f5">
+            <template #icon>
+              <SearchOutlined/>
+            </template>
+            查询
+          </a-button>
+          <a-button @click="resetQuery" class="smart-margin-left10">
+            <template #icon>
+              <ReloadOutlined/>
+            </template>
+            重置
+          </a-button>
+        </a-button-group>
       </a-form-item>
     </a-row>
   </a-form>
@@ -32,6 +34,13 @@
             <PlusOutlined/>
           </template>
           新建
+        </a-button>
+
+        <a-button @click="exportFile" type="primary">
+          <template #icon>
+            <ArrowDownOutlined/>
+          </template>
+          导出
         </a-button>
       </div>
       <div class="smart-table-setting-block">
@@ -71,7 +80,7 @@
 import addOrUpdate from './add.vue';
 import {reactive, ref, onMounted} from 'vue';
 import {base} from '/@/utils/base';
-import Pagination from "/@/components/system/base-page/index.vue"
+import Pagination from "/@/components/framework/base-page/index.vue"
 import {smartSentry} from '/@/lib/smart-sentry';
 import TableOperator from '/@/components/support/table-operator/index.vue';
 import {useRouter} from "vue-router";
@@ -159,6 +168,10 @@ function resetQuery() {
   f5();
 }
 
+function exportFile() {
+  base.download("/log/export", p.value)
+}
+
 // 查询数据
 async function f5() {
   tableLoading.value = true;
@@ -177,7 +190,7 @@ const router = useRouter();
 
 onMounted(() => {
   query.value = router.currentRoute.value.query;
-  p.value = { ...params, ...router.currentRoute.value.query }
+  p.value = {...params, ...router.currentRoute.value.query}
   f5()
 })
 

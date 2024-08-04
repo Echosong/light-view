@@ -34,7 +34,6 @@
 <script setup>
   import { onMounted, ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import { noticeApi } from '/@/api/business/oa/notice-api';
   import { smartSentry } from '/@/lib/smart-sentry';
   import DefaultHomeCard from '/@/views/system/home/components/default-home-card.vue';
 
@@ -58,9 +57,7 @@
   // 查询列表
   async function queryNoticeList() {
     try {
-      loading.value = true;
-      const result = await noticeApi.queryEmployeeNotice(queryForm);
-      data.value = result.data.list;
+
     } catch (err) {
       smartSentry.captureError(err);
     } finally {
