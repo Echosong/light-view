@@ -2,9 +2,7 @@
     <!---------- 查询表单form begin ----------->
     <a-form class="smart-query-form">
         <a-row class="smart-query-form-row">
-            <a-form-item label="关键字查询" class="smart-query-form-item">
-                <a-input style="width: 200px" v-model:value="p.keywords" placeholder="关键字查询"/>
-            </a-form-item>
+            #{el-form-item}#
             <a-form-item class="smart-query-form-item">
                 <a-button-group>
                     <a-button type="primary" @click="f5">
@@ -79,15 +77,14 @@
 import addOrUpdate from './add.vue';
 import {reactive, ref, onMounted} from 'vue';
 import {base} from '/@/utils/base';
-import Pagination from "/@/components/system/base-page/index.vue"
+import Pagination from "/@/components/framework/base-page/index.vue"
 import {smartSentry} from '/@/lib/smart-sentry';
 import TableOperator from '/@/components/support/table-operator/index.vue';
 import {useRouter} from "vue-router";
 
 // ---------------------------- 表格列 ----------------------------
 
-const columns = ref([{"title":"类型id","dataIndex":"typeId","ellipsis":true,"align":"left"},{"title":"字典键","dataIndex":"dictKey","ellipsis":true,"align":"left"},{"title":"字典键值","dataIndex":"dictValue","ellipsis":true,"align":"left"},{"title":"字典排序","dataIndex":"dictSort","ellipsis":true,"align":"left"},{"title":"字典描述","dataIndex":"dictLabel","ellipsis":true,"align":"left"},{"title":"字典类型","dataIndex":"dictType","ellipsis":true,"align":"left"},{"title":"样式属性","dataIndex":"cssClass","ellipsis":true,"align":"left"},{"title":"表格字典样式","dataIndex":"listClass","ellipsis":true,"align":"left"},{"title":"状态","dataIndex":"statusEnum","ellipsis":true,"align":"left"},{"title":"操作","dataIndex":"action","ellipsis":true,"align":"left","width":90,"fixed":"right"}])
-;
+const columns = ref([{"title":"类型id","dataIndex":"typeId","ellipsis":true,"align":"left"},{"title":"字典键","dataIndex":"dictKey","ellipsis":true,"align":"left"},{"title":"字典键值","dataIndex":"dictValue","ellipsis":true,"align":"left"},{"title":"字典排序","dataIndex":"dictSort","ellipsis":true,"align":"left"},{"title":"字典描述","dataIndex":"dictLabel","ellipsis":true,"align":"left"},{"title":"字典类型","dataIndex":"dictType","ellipsis":true,"align":"left"},{"title":"样式属性","dataIndex":"cssClass","ellipsis":true,"align":"left"},{"title":"表格字典样式","dataIndex":"listClass","ellipsis":true,"align":"left"},{"title":"状态","dataIndex":"statusEnum","ellipsis":true,"align":"left"},{"title":"操作","dataIndex":"action","ellipsis":true,"align":"left","width":90,"fixed":"right"}]);
 
 // ---------------------------- 查询数据表单和方法 ----------------------------
 

@@ -2,9 +2,15 @@
     <!---------- 查询表单form begin ----------->
     <a-form class="smart-query-form">
         <a-row class="smart-query-form-row">
-            <a-form-item label="关键字查询" class="smart-query-form-item">
-                <a-input style="width: 200px" v-model:value="p.keywords" placeholder="关键字查询"/>
-            </a-form-item>
+            <a-form-item label="标题" v-if="!query.title" class="smart-query-form-item">
+ <a-input v-model:value="p.title" placeholder="模糊查询"></a-input>
+</a-form-item>
+<a-form-item label="类型"  v-if="!query.type" class="smart-query-form-item">
+      <input-enum enumName="articleTypeEnum"  v-model:value="p.type"></input-enum>
+</a-form-item>
+<a-form-item label="发布时间"  v-if="!query.publishTime" class="smart-query-form-item">
+   <a-range-picker @change="(rangDate)=> {p.startPublishTime = rangDate[0];p.endPublishTime = rangDate[1];}" value-format="YYYY-MM-DD HH:mm:ss" />
+</a-form-item>
             <a-form-item class="smart-query-form-item">
                 <a-button-group>
                     <a-button type="primary" @click="f5">
@@ -79,21 +85,22 @@
 import addOrUpdate from './add.vue';
 import {reactive, ref, onMounted} from 'vue';
 import {base} from '/@/utils/base';
-import Pagination from "/@/components/system/base-page/index.vue"
+import Pagination from "/@/components/framework/base-page/index.vue"
 import {smartSentry} from '/@/lib/smart-sentry';
 import TableOperator from '/@/components/support/table-operator/index.vue';
 import {useRouter} from "vue-router";
-
+import Preview from "/@/components/framework/base-preview-image/index.vue";
+import InputEnum from "/@/components/framework/base-enum/index.vue";
+import Link from "/@/components/framework/base-preview-file/index.vue";
 // ---------------------------- 表格列 ----------------------------
 
-const columns = ref([{"title":"标题","dataIndex":"title","ellipsis":true,"align":"left"},{"title":"类型","dataIndex":"typeEnum","ellipsis":true,"align":"left"},{"title":"内容","dataIndex":"content","ellipsis":true,"align":"left"},{"title":"附件","dataIndex":"fileUrl","ellipsis":true,"align":"left"},{"title":"项目id","dataIndex":"projectId","ellipsis":true,"align":"left"},{"title":"操作","dataIndex":"action","ellipsis":true,"align":"left","width":90,"fixed":"right"}])
-;
+const columns = ref([{"title":"标题","dataIndex":"title","ellipsis":true,"align":"left"},{"title":"类型","dataIndex":"typeEnum","ellipsis":true,"align":"left"},{"title":"内容","dataIndex":"content","ellipsis":true,"align":"left"},{"title":"附件","dataIndex":"fileUrl","ellipsis":true,"align":"left"},{"title":"项目id","dataIndex":"projectId","ellipsis":true,"align":"left"},{"title":"发布时间","dataIndex":"publishTime","ellipsis":true,"align":"left"},{"title":"操作","dataIndex":"action","ellipsis":true,"align":"left","width":90,"fixed":"right"}]);
 
 // ---------------------------- 查询数据表单和方法 ----------------------------
 
-const params = {pageSize:10,page:1, total: 0, title:'',type:''}
+const params = {pageSize:10,page:1, total: 0, title:'',type:'',startPublishTime:'',endPublishTime:''}
 // 查询表单form
-const p = reactive({...params});
+let p = reactive({...params});
 // 表格加载loading
 const tableLoading = ref(false);
 // 表格数据
@@ -129,7 +136,7 @@ const router = useRouter();
 
 onMounted(() => {
     query.value = router.currentRoute.value.query;
-    p.value = {...params, ...router.currentRoute.value.query}
+    p = {...params, ...router.currentRoute.value.query}
     f5()
 })
 

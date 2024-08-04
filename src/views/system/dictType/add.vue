@@ -1,14 +1,13 @@
 <template>
     <a-drawer
         :title="title"
-        :width="600"
+        :width="700"
         :open="isShow"
         :body-style="{ paddingBottom: '80px' }"
         @close="isShow = false"
         destroyOnClose
     >
-        <a-form v-if="m" ref="ruleForm" :rules="rules" :model="m" :label-col="{ span: 3 }"
-                 label-width="120px">
+        <a-form v-if="m" ref="ruleForm" :rules="rules" :model="m" :label-col="{ span: 3 }" >
             <a-form-item label="字典名称"  prop="dictName" v-if="!query.dictName" >
     <a-input v-model:value="m.dictName"></a-input>
 </a-form-item>
@@ -37,7 +36,7 @@
 <script setup>
 import {ref} from "vue";
 import {base} from "/@/utils/base"
-import InputEnum from "@/components/enum/InputEnum.vue";
+import InputEnum from "/@/components/framework/base-enum/index.vue";
 
 const emits = defineEmits(['reloadList']);
 const props = defineProps(["params"]);

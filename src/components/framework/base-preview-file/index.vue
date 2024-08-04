@@ -9,11 +9,9 @@ const props = defineProps({
 
 <template>
   <a-tag color="#3b5999">
-    <a v-if="fileUrl" :href="fileUrl.split(',')[0] " target="_blank">
-      <template #icon>
-        <DiffOutlined/>
-      </template>
-      下载</a>
+    <a v-if="props.fileUrl" :href="props.fileUrl.split(',')[0] " target="_blank">
+    下载
+    </a>
     <span v-else> 暂无</span>
   </a-tag>
 </template>
