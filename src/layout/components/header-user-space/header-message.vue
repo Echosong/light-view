@@ -21,14 +21,14 @@
     <template #overlay>
       <a-card class="message-container" :bodyStyle="{ padding: 0 }">
         <a-spin :spinning="loading">
-          <a-tabs class="dropdown-tabs" centered :tabBarStyle="{ textAlign: 'center' }" style="width: 300px">
+          <a-tabs class="dropdown-tabs" centered :tabBarStyle="{ textAlign: 'left' }" style="width: 300px">
             <a-tab-pane tab="未读消息" key="message">
               <a-list class="tab-pane" size="small">
-                <a-list-item v-for="item in messageList" :key="item.messageId">
+                <a-list-item v-for="item in messageList" :key="item.id">
                   <a-list-item-meta>
                     <template #title>
                       <div class="title">
-                        <a @click="gotoMessage">{{ item.title }}</a>
+                        <a @click="gotoMessage">{{ item.message }}</a>
                       </div>
                     </template>
                     <template #description>
@@ -85,11 +85,11 @@
     try {
       loading.value = true;
       let responseModel = await messageApi.queryMessage({
-        pageNum: 1,
+        page: 1,
         pageSize: 3,
-        readFlag: false,
+        type: 5
       });
-      messageList.value = responseModel.data.list;
+      messageList.value = responseModel.data.content;
     } catch (e) {
       smartSentry.captureError(e);
     } finally {
@@ -100,7 +100,7 @@
   const router = useRouter();
   function gotoMessage() {
     show.value = false;
-    router.push({ path: '/account', query: { menuId: 'message' } });
+   // router.push({ path: '/account', query: { menuId: 'message' } });
   }
 
   // ------------------------- 时间计算  -------------------------

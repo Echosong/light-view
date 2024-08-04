@@ -1,14 +1,13 @@
 <template>
     <a-drawer
         :title="title"
-        :width="600"
+        :width="700"
         :open="isShow"
         :body-style="{ paddingBottom: '80px' }"
         @close="isShow = false"
         destroyOnClose
     >
-        <a-form v-if="m" ref="ruleForm" :rules="rules" :model="m" :label-col="{ span: 3 }"
-                 label-width="120px">
+        <a-form v-if="m" ref="ruleForm" :rules="rules" :model="m" :label-col="{ span: 3 }" >
             <a-form-item label="权限名称"  prop="name" v-if="!query.name" >
     <a-input v-model:value="m.name"></a-input>
 </a-form-item>
@@ -101,6 +100,7 @@ show:0}
 async function onSubmit() {
     try {
         await ruleForm.value.validateFields();
+        
         base.post("/permission/save", m.value).then(() => {
             emits('reloadList');
             isShow.value = false;

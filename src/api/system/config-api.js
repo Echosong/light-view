@@ -8,5 +8,9 @@ export const configApi = {
 
     getConfigList: params => {
         return getRequest( 'config/getConfigList', params)
+    },
+
+    getVersion: params =>{
+        return getRequest( 'version', params)
     }
 }

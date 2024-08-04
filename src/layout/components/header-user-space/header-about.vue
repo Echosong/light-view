@@ -9,7 +9,7 @@
 -->
 
 <template>
-  <a-dropdown class="header-trigger">
+  <a-dropdown class="header-trigger" >
     <div class="wrapper">
       <ExclamationCircleOutlined />
       <span class="name">版本</span>
@@ -17,43 +17,28 @@
     <template #overlay>
       <a-menu :class="['avatar-menu']">
         <a-menu-item >
-          <span>当前版本: 0.0.1-SNAPSHOT</span>
+          <span>当前版本: {{versionInfo.version }}</span>
         </a-menu-item>
         <a-menu-item >
-          <span>发布时间： 2022-09-06 20:02:01</span>
+          <span> 最后发布: {{versionInfo.buildTime }}</span>
         </a-menu-item>
 
       </a-menu>
     </template>
   </a-dropdown>
-  <HeaderResetPassword ref="resetPasswordRef" />
+
 </template>
 <script setup>
 import { computed, ref, onMounted } from 'vue';
-import { loginApi } from '/src/api/system/login-api';
+import { configApi } from '/src/api/system/config-api';
 import { useUserStore } from '/@/store/modules/system/user';
-import { localClear } from '/@/utils/local-util';
-import { smartSentry } from '/@/lib/smart-sentry';
-import HeaderResetPassword from './header-reset-password-modal/index.vue';
 import { useRouter } from 'vue-router';
-import { ACCOUNT_MENU } from '/@/views/system/account/account-menu.js';
+
 
 // 头像背景颜色
 const AVATAR_BACKGROUND_COLOR_ARRAY = ['#87d068', '#00B853', '#f56a00', '#1890ff'];
 
-//监听退出登录方法
-async function onLogout() {
-  try {
-    await loginApi.logout();
-  } catch (e) {
-    smartSentry.captureError(e);
-  } finally {
-    localClear();
-    useUserStore().logout();
-    location.reload();
-  }
-}
-
+const versionInfo = ref({})
 // ------------------------ 个人中心 ------------------------
 const router = useRouter();
 function toAccount(menuId) {
@@ -103,7 +88,11 @@ function hashcode(str) {
   return hash;
 }
 
-onMounted(updateAvatar);
+onMounted(async()=>  {
+  updateAvatar();
+  let {data} =  await configApi.getVersion();
+  versionInfo.value = data;
+});
 </script>
 <style lang="less" scoped>
 .wrapper {

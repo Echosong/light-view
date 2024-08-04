@@ -2,8 +2,15 @@
     <!---------- 查询表单form begin ----------->
     <a-form class="smart-query-form">
         <a-row class="smart-query-form-row">
-            <a-form-item label="权限名称" v-if="!query.name" class="smart-query-form-item">
- <a-input v-model:value="p.name" placeholder="模糊查询"></a-input>
+            <a-form-item label="消息类型"  v-if="!query.type" class="smart-query-form-item">
+      <input-enum enumName="templateTypeEnum"  style="width: 180px;"  v-model="p.type"></input-enum>
+</a-form-item>
+<a-form-item label="消息模板编码" v-if="!query.templateCode" class="smart-query-form-item">
+ <a-input v-model:value="p.templateCode" placeholder="模糊查询"></a-input>
+</a-form-item>
+
+<a-form-item label="消息接收者账号" v-if="!query.receiverAccount" class="smart-query-form-item">
+ <a-input v-model:value="p.receiverAccount" placeholder="模糊查询"></a-input>
 </a-form-item>
             <a-form-item class="smart-query-form-item">
                 <a-button-group>
@@ -83,14 +90,14 @@ import Pagination from "/@/components/framework/base-page/index.vue"
 import {smartSentry} from '/@/lib/smart-sentry';
 import TableOperator from '/@/components/support/table-operator/index.vue';
 import {useRouter} from "vue-router";
-
+import InputEnum from "/@/components/framework/base-enum/index.vue";
 // ---------------------------- 表格列 ----------------------------
 
-const columns = ref([{"title":"权限名称","dataIndex":"name","ellipsis":true,"align":"left"},{"title":"权限描述","dataIndex":"description","ellipsis":true,"align":"left"},{"title":"访问路径","dataIndex":"url","ellipsis":true,"align":"left"},{"title":"权限标识","dataIndex":"perms","ellipsis":true,"align":"left"},{"title":"组件","dataIndex":"component","ellipsis":true,"align":"left"},{"title":"父级id","dataIndex":"parentId","ellipsis":true,"align":"left"},{"title":"类型","dataIndex":"type","ellipsis":true,"align":"left"},{"title":"排序","dataIndex":"sort","ellipsis":true,"align":"left"},{"title":"图标","dataIndex":"icon","ellipsis":true,"align":"left"},{"title":"是否展现 1 展现 0 不展现","dataIndex":"show","ellipsis":true,"align":"left"},{"title":"操作","dataIndex":"action","ellipsis":true,"align":"left","width":90,"fixed":"right"}]);
+const columns = ref([{"title":"消息类型","dataIndex":"typeEnum","ellipsis":true,"align":"left"},{"title":"消息模板编码","dataIndex":"templateCode","ellipsis":true,"align":"left"},{"title":"消息接收者","dataIndex":"receiverId","ellipsis":true,"align":"left"},{"title":"消息接收者账号","dataIndex":"receiverAccount","ellipsis":true,"align":"left"},{"title":"消息发送者","dataIndex":"senderId","ellipsis":true,"align":"left"},{"title":"消息发送者账号","dataIndex":"senderAccount","ellipsis":true,"align":"left"},{"title":"状态","dataIndex":"stateEnum","ellipsis":true,"align":"left"},{"title":"消息参数","dataIndex":"params","ellipsis":true,"align":"left"},{"title":"消息内容","dataIndex":"message","ellipsis":true,"align":"left"},{"title":"操作","dataIndex":"action","ellipsis":true,"align":"left","width":90,"fixed":"right"}]);
 
 // ---------------------------- 查询数据表单和方法 ----------------------------
 
-const params = {pageSize:10,page:1, total: 0, name:''}
+const params = {pageSize:10,page:1, total: 0, type:'',templateCode:'',receiverId:'',receiverAccount:''}
 // 查询表单form
 let p = reactive({...params});
 // 表格加载loading
@@ -114,7 +121,7 @@ function resetQuery() {
 async function f5() {
     tableLoading.value = true;
     try {
-        let queryResult = await base.put('/permission/listPage', p);
+        let queryResult = await base.put('/message/listPage', p);
         tableData.value = queryResult.data.content;
         total.value = queryResult.data.totalElements;
     } catch (e) {
@@ -133,7 +140,7 @@ onMounted(() => {
 })
 
 function exportFile() {
-    base.download("/permission/export", p.value)
+    base.download("/message/export", p.value)
 }
 
 // ---------------------------- 添加/修改 ----------------------------
@@ -149,7 +156,7 @@ function add() {
 //确认删除
 function del(data) {
     base.confirm('是否删除，此操作不可撤销', async function () {
-        let res = await base.delete("/permission/delete/" + data.id);
+        let res = await base.delete("/message/delete/" + data.id);
         base.success(res.message);
         f5();
     }.bind(this));
@@ -163,7 +170,7 @@ function shortChange(e) {
 }
 
 async function updateSwitch(row) {
-    await base.post('/permission/save', row);
+    await base.post('/message/save', row);
     base.success("更新成功")
 }
 
