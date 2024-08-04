@@ -1,57 +1,62 @@
 <template>
-    <Dialog v-model="isShow" :title="title" maxHeight="700px">
-        <el-form v-if="m" ref="ruleForm" :rules="rules" :model="m" class="demo-ruleForm"
-                 label-width="120px">
-            <el-form-item label="账号"  prop="username" v-if="!query.username" >
-    <el-input v-model="m.username"></el-input>
-</el-form-item>
-<el-form-item label="手机号"  prop="mobile" v-if="!query.mobile" >
-    <el-input v-model="m.mobile"></el-input>
-</el-form-item>
-<el-form-item label="密码"  prop="password" v-if="!query.password" >
-    <el-input v-model="m.password"></el-input>
-</el-form-item>
-<el-form-item label="性别" v-if="!query.sex">
-     <input-enum enumName="userSexEnum" v-model="m.sex" ></input-enum>
-</el-form-item>
-<el-form-item label="工号"  prop="code" v-if="!query.code" >
-    <el-input v-model="m.code"></el-input>
-</el-form-item>
-<el-form-item label="姓名"  prop="name" v-if="!query.name" >
-    <el-input v-model="m.name"></el-input>
-</el-form-item>
-<el-form-item label="状态" v-if="!query.state">
-<el-switch v-model="m.state" ></el-switch>
-</el-form-item>
-<el-form-item label="邮箱"  prop="email" v-if="!query.email" >
-    <el-input v-model="m.email"></el-input>
-</el-form-item>
-<el-form-item label="注册ip"  prop="regIp" v-if="!query.regIp" >
-    <el-input v-model="m.regIp"></el-input>
-</el-form-item>
-<el-form-item label="登录ip"  prop="loginIp" v-if="!query.loginIp" >
-    <el-input v-model="m.loginIp"></el-input>
-</el-form-item>
-<el-form-item label="个人简介" v-if="!query.info">
-<el-input type="textarea"  rows="2" placeholder="个人简介"  v-model="m.info"></el-input>
-</el-form-item>
-        </el-form>
+    <a-drawer
+        :title="title"
+        :width="700"
+        :open="isShow"
+        :body-style="{ paddingBottom: '80px' }"
+        @close="isShow = false"
+        destroyOnClose
+    >
+        <a-form v-if="m" ref="ruleForm" :rules="rules" :model="m" :label-col="{ span: 3 }" >
+            <a-form-item label="账号"  prop="username" v-if="!query.username" >
+    <a-input v-model:value="m.username"></a-input>
+</a-form-item>
+<a-form-item label="手机号"  prop="mobile" v-if="!query.mobile" >
+    <a-input v-model:value="m.mobile"></a-input>
+</a-form-item>
+<a-form-item label="密码"  prop="password" v-if="!query.password" >
+    <a-input v-model:value="m.password"></a-input>
+</a-form-item>
+<a-form-item label="性别" v-if="!query.sex" >
+     <input-enum enumName="userSexEnum" v-model:value="m.sex" ></input-enum>
+</a-form-item>
+<a-form-item label="工号"  prop="code" v-if="!query.code" >
+    <a-input v-model:value="m.code"></a-input>
+</a-form-item>
+<a-form-item label="姓名"  prop="name" v-if="!query.name" >
+    <a-input v-model:value="m.name"></a-input>
+</a-form-item>
+<a-form-item label="状态" v-if="!query.state" >
+<e-switch v-model:value="m.state" ></e-switch>
+</a-form-item>
+<a-form-item label="邮箱"  prop="email" v-if="!query.email" >
+    <a-input v-model:value="m.email"></a-input>
+</a-form-item>
+<a-form-item label="注册ip"  prop="regIp" v-if="!query.regIp" >
+    <a-input v-model:value="m.regIp"></a-input>
+</a-form-item>
+<a-form-item label="登录ip"  prop="loginIp" v-if="!query.loginIp" >
+    <a-input v-model:value="m.loginIp"></a-input>
+</a-form-item>
+<a-form-item label="个人简介" v-if="!query.info" >
+<a-textarea   rows="2" placeholder="个人简介"  v-model:value="m.info"></a-textarea>
+</a-form-item>
+        </a-form>
         <template #footer>
-            <span class="dialog-footer">
-                <el-button type="primary" @click="ok($parent)">
-                    确定
-                </el-button>
-                <el-button @click="isShow = false">取消</el-button>
-            </span>
+            <a-space>
+                <a-button @click="isShow= false">取消</a-button>
+                <a-button type="primary" @click="onSubmit">保存</a-button>
+            </a-space>
         </template>
-    </Dialog>
+    </a-drawer>
 </template>
 
 <script setup>
-import Dialog from "@/components/dialog/index.vue";
-import {inject, ref} from "vue";
-import InputEnum from "@/components/enum/InputEnum.vue";
+import {ref} from "vue";
+import {base} from "/@/utils/base"
+import InputEnum from "/@/components/framework/base-enum/index.vue";
 
+const emits = defineEmits(['reloadList']);
 const props = defineProps(["params"]);
 const m = ref({});
 const title = ref("");
@@ -68,7 +73,6 @@ regIp:[],
 loginIp:[],
 info:[],
 }
-const sa = inject('sa')
 const ruleForm = ref();
 const  query = ref({});
 
@@ -76,7 +80,7 @@ async function open(data, parmas)  {
     isShow.value = true;
     if (data) {
         title.value = "修改 用户";
-        let one = await sa.get("/user/find/"+data.id);
+        let one = await base.get("/user/find/"+data.id);
         m.value = one.data;
         m.value = data;
     } else {
@@ -98,18 +102,17 @@ info:''}
 }
 
 //提交用户信息
-function ok(parent) {
-    ruleForm.value.validate(async (valid) => {
-        if (valid) {
-            
-            await sa.post("/user/save", m.value);
-            parent.f5();
+async function onSubmit() {
+    try {
+        await ruleForm.value.validateFields();
+        
+        base.post("/user/save", m.value).then(() => {
+            emits('reloadList');
             isShow.value = false;
-        } else {
-            console.log("error submit!!");
-            return false;
-        }
-    });
+        });
+    } catch (err) {
+        base.error('参数验证错误，请仔细填写表单数据!'+ err.message);
+    }
 }
 
 defineExpose({
