@@ -13,7 +13,7 @@
   </a-upload>
 </template>
 <script setup>
-import {onMounted, ref} from 'vue';
+import {defineEmits, onMounted, ref} from 'vue';
 import {useUserStore} from "/@/store/modules/system/user.js";
 
 const props = defineProps({
@@ -32,6 +32,7 @@ const props = defineProps({
 })
 const action = ref("")
 const fileList = ref([])
+const emit = defineEmits(["onSuccess"])
 
 onMounted(() => {
   if (props.file) {
@@ -59,6 +60,6 @@ const handleChange = info => {
     return file;
   });
   fileList.value = resFileList;
-  emit('onSuccess', urls)
+  emit('onSuccess', JSON.stringify(urls))
 };
 </script>

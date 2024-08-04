@@ -25,12 +25,12 @@ watch(() => props.modelValue, async (newVal, oldVal) => {
 })
 onMounted(async () => {
   const { data } = await base.get("/getEnums?enumName=" + props.enumName);
-  for (let item in data) {
+  data.forEach(item => {
     options.value.push({
       value: item.code,
       label: item.name
     })
-  }
+  })
   changeValue.value = parseInt(props.modelValue || 10000);
 })
 

@@ -2,23 +2,22 @@
   <a-upload
       :action="action"
       :multiple="true"
-      :file-list="fileList"
+      v-model:file-list="fileList"
       list-type="picture-card"
       :headers="{ 'Authorization': useUserStore().getToken }"
       @change="handleChange"
       @preview="handlePreview"
   >
-    <a-button>
-      <upload-outlined></upload-outlined>
-      点击上传
-    </a-button>
+    <div>
+      <plus-outlined />
+    </div>
   </a-upload>
   <a-modal :open="previewVisible" :title="previewTitle" :footer="null" @cancel="handleCancel">
     <img alt="example" style="width: 100%" :src="previewImage" />
   </a-modal>
 </template>
 <script setup>
-import {onMounted, ref} from 'vue';
+import {defineEmits, onMounted, ref} from 'vue';
 import {useUserStore} from "/@/store/modules/system/user.js";
 
 const props = defineProps({
@@ -40,6 +39,8 @@ const fileList = ref([])
 const previewVisible = ref(false);
 const previewImage = ref('');
 const previewTitle = ref('');
+
+const emit = defineEmits(["onSuccess"])
 
 onMounted(() => {
   if (props.file) {
@@ -72,7 +73,7 @@ const handleChange = info => {
     return file;
   });
   fileList.value = resFileList;
-  emit('onSuccess', urls)
+  emit('onSuccess', JSON.stringify(urls))
 };
 
 const handlePreview = async file => {

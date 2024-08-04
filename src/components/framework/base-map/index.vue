@@ -25,12 +25,12 @@ const props = defineProps({
 
 onMounted(async () => {
   const {data} = await base.get("/"+props.routeName+"/getMap?type="+props.type);
-  for (let item in data) {
+  data.forEach(item => {
     options.value.push({
       value: item.code,
       label: item.name
     })
-  }
+  })
   changeValue.value = parseInt(props.modelValue || 10000);
 })
 
