@@ -6,13 +6,13 @@
     <div class="password-form-area">
       <a-form ref="formRef" :model="form" :rules="rules" layout="vertical">
         <a-form-item label="原密码" name="oldPassword">
-          <a-input class="form-item" v-model:value.trim="form.oldPassword" type="password" placeholder="请输入原密码" />
+          <a-input class="form-item" v-model:value.trim="form.password" type="password" placeholder="请输入原密码" />
         </a-form-item>
         <a-form-item label="新密码" name="newPassword" :help="tips">
           <a-input class="form-item" v-model:value.trim="form.newPassword" type="password" placeholder="请输入新密码" />
         </a-form-item>
         <a-form-item label="确认密码" name="confirmPwd" :help="tips">
-          <a-input class="form-item" v-model:value.trim="form.confirmPwd" type="password" placeholder="请输入确认密码" />
+          <a-input class="form-item" v-model:value.trim="form.rePassword" type="password" placeholder="请输入确认密码" />
         </a-form-item>
       </a-form>
       <a-button type="primary" @click="onSubmit">修改密码</a-button>
@@ -23,21 +23,21 @@
   import { reactive, ref } from 'vue';
   import { message } from 'ant-design-vue';
   import { SmartLoading } from '/@/components/framework/smart-loading/index.js';
-  import { employeeApi } from '/@/api/system/employee-api.js';
   import { smartSentry } from '/@/lib/smart-sentry.js';
+  import {base} from "/@/utils/base.js";
 
   const formRef = ref();
   const tips = '密码长度8-20位且包含大写字母、小写字母、数字三种'; //校验规则
   const reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/;
 
   const rules = {
-    oldPassword: [{ required: true, message: '请输入原密码' }],
+    password: [{ required: true, message: '请输入原密码' }],
     newPassword: [{ required: true, type: 'string', pattern: reg, message: '密码格式错误' }],
-    confirmPwd: [{ required: true, type: 'string', pattern: reg, message: '请输入确认密码' }],
+    rePassword: [{ required: true, type: 'string', pattern: reg, message: '请输入确认密码' }],
   };
 
   const formDefault = {
-    oldPassword: '',
+    password: '',
     newPassword: '',
   };
   let form = reactive({
@@ -48,17 +48,17 @@
     formRef.value
       .validate()
       .then(async () => {
-        if (form.newPassword !== form.confirmPwd) {
+        if (form.newPassword !== form.rePassword) {
           message.error('新密码与确认密码不一致');
           return;
         }
         SmartLoading.show();
         try {
-          await employeeApi.updateEmployeePassword(form);
+          await base.post('/user/setPassword', form);
           message.success('修改成功');
-          form.oldPassword = '';
+          form.password = '';
           form.newPassword = '';
-          form.confirmPwd = '';
+          form.rePassword = '';
         } catch (error) {
           smartSentry.captureError(error);
         } finally {

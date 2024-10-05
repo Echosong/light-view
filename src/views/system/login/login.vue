@@ -12,8 +12,8 @@
   <div class="login-container">
     <div class="box-item desc">
       <div class="welcome">
-        <p>欢迎登录 LightAdmin V3</p>
-        <p class="sub-welcome">「高质量代码、简洁、安全」的开发平台</p>
+        <p>欢迎登录 园区管理系统</p>
+        <p class="sub-welcome">「爱莱生活」的智慧平台</p>
       </div>
       <img class="welcome-img" :src="leftBg2"/>
     </div>
@@ -36,11 +36,9 @@
           <a-input class="captcha-input" v-model:value.trim="loginForm.code" placeholder="请输入验证码"/>
           <img class="captcha-img" :src="captchaBase64Image" @click="getCaptcha"/>
         </a-form-item>
+
         <a-form-item>
-          <a-checkbox v-model:checked="rememberPwd">记住密码</a-checkbox>
-        </a-form-item>
-        <a-form-item>
-          <div class="btn" @click="onLogin">登录</div>
+          <div class="btn"  style="margin-top: 20px;" @click="onLogin">登录</div>
         </a-form-item>
       </a-form>
 

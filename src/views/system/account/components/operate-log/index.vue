@@ -14,14 +14,6 @@
         <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :presets="defaultChooseTimeRange" style="width: 240px" />
       </a-form-item>
 
-      <a-form-item label="快速筛选" class="smart-query-form-item">
-        <a-radio-group v-model:value="queryForm.successFlag" @change="onSearch">
-          <a-radio-button :value="undefined">全部</a-radio-button>
-          <a-radio-button :value="true">成功</a-radio-button>
-          <a-radio-button :value="false">失败</a-radio-button>
-        </a-radio-group>
-      </a-form-item>
-
       <a-form-item class="smart-query-form-item smart-margin-left10">
         <a-button-group>
           <a-button type="primary" @click="ajaxQuery">
@@ -43,17 +35,7 @@
 
   <a-table size="small" :loading="tableLoading" :dataSource="tableData" :columns="columns" bordered rowKey="operateLogId" :pagination="false">
     <template #bodyCell="{ text, record, column }">
-      <template v-if="column.dataIndex === 'successFlag'">
-        <a-tag :color="text ? 'success' : 'error'">{{ text ? '成功' : '失败' }}</a-tag>
-      </template>
-      <template v-if="column.dataIndex === 'userAgent'">
-        <div>{{ record.browser }} / {{ record.os }} / {{ record.device }}</div>
-      </template>
-      <template v-if="column.dataIndex === 'action'">
-        <div class="smart-table-operate">
-          <a-button @click="showDetail(record.operateLogId)" type="link">详情</a-button>
-        </div>
-      </template>
+
     </template>
   </a-table>
 
@@ -73,62 +55,55 @@
     />
   </div>
 
-  <OperateLogDetailModal ref="detailModal" />
 </template>
 <script setup>
   import { onMounted, reactive, ref } from 'vue';
-  import OperateLogDetailModal from '/@/views/support/operate-log/operate-log-detail-modal.vue';
-  import { operateLogApi } from '/@/api/support/operate-log-api';
   import { PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import { defaultTimeRanges } from '/@/lib/default-time-ranges';
-  import uaparser from 'ua-parser-js';
   import { smartSentry } from '/@/lib/smart-sentry';
+  import {base} from "/@/utils/base.js";
 
   const columns = ref([
+
     {
-      title: '操作模块',
-      dataIndex: 'module',
-      ellipsis: true,
-      width: 120,
-    },
-    {
-      title: '操作内容',
-      dataIndex: 'content',
+      title: '请求ip',
+      dataIndex: 'requestIp',
       ellipsis: true,
     },
     {
-      title: 'IP地区',
-      dataIndex: 'ipRegion',
+      title: '描述',
+      dataIndex: 'description',
       ellipsis: true,
-      width: 120,
     },
     {
-      title: '客户端',
-      dataIndex: 'userAgent',
+      title: '浏览器',
+      dataIndex: 'browser',
       ellipsis: true,
-      width: 140,
     },
+    {
+      title: '请求耗时',
+      dataIndex: 'time',
+      ellipsis: true,
+    },
+    {
+      title: '方法名',
+      dataIndex: 'method',
+      ellipsis: true,
+    },
+
     {
       title: '时间',
       dataIndex: 'createTime',
-      width: 150,
+      ellipsis: true,
     },
     {
-      title: '结果',
-      dataIndex: 'successFlag',
-      width: 60,
-    },
-    {
-      title: '操作',
-      dataIndex: 'action',
-      fixed: 'right',
-      width: 60,
-    },
+      title: '参数',
+      dataIndex: 'params',
+      ellipsis: true,
+    }
   ]);
 
   const queryFormState = {
-    userName: '',
-    successFlag: undefined,
     startDate: undefined,
     endDate: undefined,
     pageNum: 1,
@@ -161,19 +136,10 @@
   async function ajaxQuery() {
     try {
       tableLoading.value = true;
-      let responseModel = await operateLogApi.queryListLogin(queryForm);
+      let responseModel = await base.put('/log/currentListPage',queryForm);
 
-      for (const e of responseModel.data.list) {
-        if (!e.userAgent) {
-          continue;
-        }
-        let ua = uaparser(e.userAgent);
-        e.browser = ua.browser.name;
-        e.os = ua.os.name;
-        e.device = ua.device.vendor ? ua.device.vendor + ua.device.model : '';
-      }
 
-      const list = responseModel.data.list;
+      const list = responseModel.data.content;
       total.value = responseModel.data.total;
       tableData.value = list;
     } catch (e) {

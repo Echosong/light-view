@@ -74,7 +74,6 @@ async function open(data, parmas)  {
         title.value = "修改 站内消息、短息 记录";
         let one = await base.get("/message/find/"+data.id);
         m.value = one.data;
-        m.value = data;
     } else {
         let mdata  = {type:0,
 templateCode:'',

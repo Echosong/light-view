@@ -1,5 +1,5 @@
 <template>
-  <default-home-card icon="PieChartOutlined" title="加班统计">
+  <default-home-card icon="PieChartOutlined" title="会员统计">
     <div class="echarts-box">
       <div class="pie-main" id="pie-main"></div>
     </div>
@@ -9,12 +9,15 @@
   import DefaultHomeCard from '/@/views/system/home/components/default-home-card.vue';
   import * as echarts from 'echarts';
   import { onMounted } from 'vue';
+  import {base} from "/@/utils/base.js";
 
   onMounted(() => {
     init();
   });
 
-  function init() {
+  async function init() {
+    const  st = await base.get('/member/statistic/num')
+    const stData = st.data;
     let option = {
       tooltip: {
         trigger: 'item',
@@ -25,7 +28,7 @@
       },
       series: [
         {
-          name: '加班次数',
+          name: '会员统计',
           type: 'pie',
           radius: ['40%', '70%'],
           avoidLabelOverlap: false,
@@ -49,10 +52,9 @@
             show: false,
           },
           data: [
-            { value: 10, name: '初晓' },
-            { value: 8, name: '善逸' },
-            { value: 3, name: '胡克' },
-            { value: 1, name: '罗伊' },
+            { value: stData.num, name: '总人数' },
+            { value: stData.manNum, name: '男性' },
+            { value: stData.womanNum, name: '女性' },
           ],
         },
       ],

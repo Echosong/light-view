@@ -135,7 +135,7 @@ const router = useRouter();
 
 onMounted(() => {
     query.value = router.currentRoute.value.query;
-    p = {...params, ...router.currentRoute.value.query}
+
     f5()
 })
 

@@ -1,36 +1,30 @@
 <template>
   <a-card size="small" :bordered="false" :hoverable="true" style="padding-left: 20px; ">
-    <a-tabs v-model:activeKey="activeName" class="smart-query-form"  >
+    <a-tabs v-model:activeKey="activeName" class="smart-query-form">
       <a-tab-pane :key="index" :tab="key" v-for="(value, key, index) in configObj">
         <a-form v-if="m" ref="ruleForm" :rules="rules" :model="m" :label-col="{ span: 4 }">
           <template v-for="(item, idx) in value">
             <a-form-item :label="item.name" :tooltip="item.description" style="width: 80%;">
               <a-input v-if="item.type === 0" v-model:value="item.value"></a-input>
-
-              <a-select  v-if="item.type === 1" v-model:value="item.value">
-                <a-select-option  value="0">请选择</a-select-option>
+              <a-select v-if="item.type === 1" v-model:value="item.value">
+                <a-select-option value="0">请选择</a-select-option>
                 <a-select-option v-for="op in item.options" :key="op.v" :value="op.v">{{ op.n }}</a-select-option>
               </a-select>
-
               <ESwitch v-if="item.type === 2" v-model:value="item.value" size="default"></ESwitch>
-
               <template v-if="item.type === 3">
                 <a-checkbox-group v-model:value="item.value">
                   <a-checkbox v-for="op in item.options" :key="op.v" :value="op.v">{{ op.n }}
                   </a-checkbox>
                 </a-checkbox-group>
               </template>
-
-              <FileImage v-if="item.type === 4" @onremove="item.value = ''"
-                         @onSuccess="item.value = $event" :file="item.value"/>
+              <FileImage v-if="item.type === 4" @onremove="item.value = ''" @onSuccess="item.value = $event" :file="item.value"/>
 
               <a-textarea v-if="item.type === 5" v-model:value="item.value"></a-textarea>
 
-              <File v-if="item.type === 6" @onremove="item.value = ''"
-                    @onSuccess="item.value = $event" :file="item.value"/>
+              <File v-if="item.type === 6" @onremove="item.value = ''"  @onSuccess="item.value = $event" :file="item.value"/>
 
-              <Wangeditor ref="content" v-if="item.type === 7" :modelValue="item.value"></Wangeditor>
-
+              <Wangeditor ref="content" v-if="item.type === 7" v-model="item.value"></Wangeditor>
+              <ConfigTable v-model="item.value" v-if="item.type === 8"/>
             </a-form-item>
           </template>
         </a-form>
@@ -54,6 +48,7 @@ import {configApi} from "/@/api/system/config-api.js";
 import Wangeditor from "/@/components/framework/wangeditor/index.vue";
 import FileImage from "/@/components/framework/base-upload-image/index.vue";
 import File from "/@/components/framework/base-upload-file/index.vue";
+import ConfigTable from "/@/views/system/config/configTable.vue";
 
 const m = ref({});
 const activeName = ref(0)

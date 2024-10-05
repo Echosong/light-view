@@ -5,6 +5,11 @@
       <a-form-item label="关键字查询" class="smart-query-form-item">
         <a-input style="width: 200px" v-model:value="p.keywords" placeholder="关键字查询"/>
       </a-form-item>
+
+      <a-form-item label="请求时间" class="smart-query-form-item">
+        <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :presets="defaultChooseTimeRange" style="width: 240px" />
+      </a-form-item>
+
       <a-form-item class="smart-query-form-item">
         <a-button-group>
           <a-button type="primary" @click="f5">
@@ -84,6 +89,7 @@ import Pagination from "/@/components/framework/base-page/index.vue"
 import {smartSentry} from '/@/lib/smart-sentry';
 import TableOperator from '/@/components/support/table-operator/index.vue';
 import {useRouter} from "vue-router";
+import {defaultTimeRanges} from "/@/lib/default-time-ranges.js";
 
 // ---------------------------- 表格列 ----------------------------
 
@@ -143,11 +149,18 @@ const columns = ref([
 ]);
 
 // ---------------------------- 查询数据表单和方法 ----------------------------
-
+const defaultChooseTimeRange = defaultTimeRanges;
+// 时间变动
+function changeCreateDate(dates, dateStrings) {
+  p.startDate = dateStrings[0];
+  p.endDate = dateStrings[1];
+}
 const params = {
   keywords: undefined, //关键字查询
   page: 1,
   pageSize: 10,
+  startDate: undefined,
+  endDate: undefined,
 };
 // 查询表单form
 const p = reactive({...params});

@@ -1,5 +1,5 @@
 <template>
-  <default-home-card icon="BarChartOutlined" title="代码提交量">
+  <default-home-card icon="BarChartOutlined" title="订单统计">
     <div class="echarts-box">
       <div class="gradient-main" id="gradient-main"></div>
     </div>
@@ -9,14 +9,17 @@
   import DefaultHomeCard from '/@/views/system/home/components/default-home-card.vue';
   import * as echarts from 'echarts';
   import { onMounted } from 'vue';
+  import {base} from "/@/utils/base.js";
 
   onMounted(() => {
     init();
   });
 
-  function init() {
+  async function init() {
+    const  st = await base.get('/orderProduct/statistic')
+
     let option = {
-      color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+      color: ['#80FFA5', '#FF0087', ],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -27,7 +30,7 @@
         },
       },
       legend: {
-        data: ['罗伊', '佩弦', '开云', '清野', '飞叶'],
+        data: ['订单金额','订单数量'],
       },
       grid: {
         left: '3%',
@@ -39,7 +42,7 @@
         {
           type: 'category',
           boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+          data: st.data.date,
         },
       ],
       yAxis: [
@@ -49,7 +52,7 @@
       ],
       series: [
         {
-          name: '罗伊',
+          name: '订单金额',
           type: 'line',
           stack: 'Total',
           smooth: true,
@@ -60,6 +63,7 @@
           areaStyle: {
             opacity: 0.8,
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+
               {
                 offset: 0,
                 color: 'rgb(128, 255, 165)',
@@ -73,64 +77,12 @@
           emphasis: {
             focus: 'series',
           },
-          data: [140, 232, 101, 264, 90, 340, 250],
+          data: st.data.sums,
         },
+
+
         {
-          name: '佩弦',
-          type: 'line',
-          stack: 'Total',
-          smooth: true,
-          lineStyle: {
-            width: 0,
-          },
-          showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: 'rgb(0, 221, 255)',
-              },
-              {
-                offset: 1,
-                color: 'rgb(77, 119, 255)',
-              },
-            ]),
-          },
-          emphasis: {
-            focus: 'series',
-          },
-          data: [120, 282, 111, 234, 220, 340, 310],
-        },
-        {
-          name: '开云',
-          type: 'line',
-          stack: 'Total',
-          smooth: true,
-          lineStyle: {
-            width: 0,
-          },
-          showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: 'rgb(55, 162, 255)',
-              },
-              {
-                offset: 1,
-                color: 'rgb(116, 21, 219)',
-              },
-            ]),
-          },
-          emphasis: {
-            focus: 'series',
-          },
-          data: [320, 132, 201, 334, 190, 130, 220],
-        },
-        {
-          name: '清野',
+          name: '订单数量',
           type: 'line',
           stack: 'Total',
           smooth: true,
@@ -154,38 +106,7 @@
           emphasis: {
             focus: 'series',
           },
-          data: [220, 402, 231, 134, 190, 230, 120],
-        },
-        {
-          name: '飞叶',
-          type: 'line',
-          stack: 'Total',
-          smooth: true,
-          lineStyle: {
-            width: 0,
-          },
-          showSymbol: false,
-          label: {
-            show: true,
-            position: 'top',
-          },
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: 'rgb(255, 191, 0)',
-              },
-              {
-                offset: 1,
-                color: 'rgb(224, 62, 76)',
-              },
-            ]),
-          },
-          emphasis: {
-            focus: 'series',
-          },
-          data: [220, 302, 181, 234, 210, 290, 150],
+          data: st.data.counts,
         },
       ],
     };
@@ -202,7 +123,7 @@
     align-items: center;
     justify-content: center;
     .gradient-main {
-      width: 1200px;
+      width: 95%;
       height: 300px;
       background: #fff;
     }

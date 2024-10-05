@@ -79,7 +79,7 @@
 import addOrUpdate from './add.vue';
 import {reactive, ref, onMounted} from 'vue';
 import {base} from '/@/utils/base';
-import Pagination from "/@/components/system/base-page/index.vue"
+import Pagination from "/@/components/framework/base-page/index.vue"
 import {smartSentry} from '/@/lib/smart-sentry';
 import TableOperator from '/@/components/support/table-operator/index.vue';
 import {useRouter} from "vue-router";
