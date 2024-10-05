@@ -22,7 +22,7 @@ export function privilegeDirective(el, binding) {
     return false;
   }
   // 如果有权限，删除节点
-  if (!_.some(userPointsList, ['webPerms', binding.value])) {
+  if (!_.some(userPointsList, ['perms', binding.value])) {
     el.parentNode.removeChild(el);
   }
   return true;
