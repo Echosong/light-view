@@ -2,12 +2,26 @@
   <!---------- 查询表单form begin ----------->
   <a-form class="smart-query-form">
     <a-row class="smart-query-form-row">
-      <a-form-item label="关键字查询" class="smart-query-form-item">
-        <a-input style="width: 200px" v-model:value="p.keywords" placeholder="关键字查询"/>
+      <a-form-item label="用户" v-if="!query.username" class="smart-query-form-item">
+        <a-input v-model:value="p.username" placeholder="模糊查询"></a-input>
+      </a-form-item>
+      <a-form-item label="日志类型" v-if="!query.logType" class="smart-query-form-item">
+        <input-enum enumName="businessEnum" style="width: 180px;" v-model="p.logType"></input-enum>
+      </a-form-item>
+
+      <a-form-item label="描述" v-if="!query.description" class="smart-query-form-item">
+        <a-input v-model:value="p.description" placeholder="模糊查询"></a-input>
       </a-form-item>
 
       <a-form-item label="请求时间" class="smart-query-form-item">
         <a-range-picker @change="changeCreateDate" v-model:value="createDateRange" :presets="defaultChooseTimeRange" style="width: 240px" />
+      </a-form-item>
+      <a-form-item label="状态" class="smart-query-form-item" @change="f5">
+      <a-radio-group v-model:value="p.state" >
+        <a-radio-button value="">全部</a-radio-button>
+        <a-radio-button :value="1">成功</a-radio-button>
+        <a-radio-button :value="0">失败</a-radio-button>
+      </a-radio-group>
       </a-form-item>
 
       <a-form-item class="smart-query-form-item">
@@ -40,7 +54,6 @@
           </template>
           新建
         </a-button>
-
         <a-button @click="exportFile" type="primary">
           <template #icon>
             <ArrowDownOutlined/>
@@ -68,9 +81,16 @@
       <template #bodyCell="{ text, record, column }">
         <template v-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
-            <a-button @click="update(record)" type="link">编辑</a-button>
-            <a-button @click="del(record)" danger type="link">删除</a-button>
+            <a-button @click="update(record)" type="link">查看</a-button>
           </div>
+        </template>
+
+        <template v-if="column.dataIndex === 'stateEnum'">
+            <a-tag v-if="record.state === 1" color="green">成功</a-tag>
+          <a-tag v-else color="red">失败</a-tag>
+        </template>
+        <template v-if="column.dataIndex === 'time'">
+          <div>{{text}} ms</div>
         </template>
       </template>
     </a-table>
@@ -89,81 +109,52 @@ import Pagination from "/@/components/framework/base-page/index.vue"
 import {smartSentry} from '/@/lib/smart-sentry';
 import TableOperator from '/@/components/support/table-operator/index.vue';
 import {useRouter} from "vue-router";
+import InputEnum from "/@/components/framework/base-enum/index.vue";
 import {defaultTimeRanges} from "/@/lib/default-time-ranges.js";
-
 // ---------------------------- 表格列 ----------------------------
 
-const columns = ref([
-  {
-    title: '用户',
-    dataIndex: 'username',
-    ellipsis: true,
-  },
-  {
-    title: '请求ip',
-    dataIndex: 'requestIp',
-    ellipsis: true,
-  },
-  {
-    title: '地址',
-    dataIndex: 'address',
-    ellipsis: true,
-  },
-  {
-    title: '描述',
-    dataIndex: 'description',
-    ellipsis: true,
-  },
-  {
-    title: '浏览器',
-    dataIndex: 'browser',
-    ellipsis: true,
-  },
-  {
-    title: '请求耗时',
-    dataIndex: 'time',
-    ellipsis: true,
-  },
-  {
-    title: '方法名',
-    dataIndex: 'method',
-    ellipsis: true,
-  },
+const columns = ref([{
+  "title": "用户",
+  "dataIndex": "username",
+  "ellipsis": true,
+  "align": "left",width: 100
+}, {"title": "类型", "dataIndex": "logTypeEnum", "ellipsis": true, "align": "left",width: 60},
+  {"title": "请求时间", "dataIndex": "createTime", "ellipsis": true, "align": "left",width: 180},
 
   {
-    title: '时间',
-    dataIndex: 'createTime',
-    ellipsis: true,
-  },
-  {
-    title: '参数',
-    dataIndex: 'params',
-    ellipsis: true,
-  },
-  {
-    title: '操作',
-    dataIndex: 'action',
-    fixed: 'right',
-    width: 90,
-  },
-]);
+  "title": "请求ip",
+  "dataIndex": "requestIp",
+  "ellipsis": true,
+  "align": "left",width: 180
+}, {"title": "描述", "dataIndex": "description", "ellipsis": true, "align": "left"}, {
+  "title": "客户端",
+  "dataIndex": "browser",
+  "ellipsis": true,
+  "align": "left"
+}, {"title": "请求耗时", "dataIndex": "time", "ellipsis": true, "align": "left", width: 80}, {
+  "title": "方法名",
+  "dataIndex": "method",
+  "ellipsis": true,
+  "align": "left"
+}, {"title": "参数", "dataIndex": "params", "ellipsis": true, "align": "left"}, {
+  "title": "请求路径",
+  "dataIndex": "urlPath",
+  "ellipsis": true,
+  "align": "left"
+}, {"title": "状态", "dataIndex": "stateEnum", "ellipsis": true, "align": "left",width: 80}, {
+  "title": "操作",
+  "dataIndex": "action",
+  "ellipsis": true,
+  "align": "left",
+  "width": 50,
+  "fixed": "right"
+}]);
 
 // ---------------------------- 查询数据表单和方法 ----------------------------
-const defaultChooseTimeRange = defaultTimeRanges;
-// 时间变动
-function changeCreateDate(dates, dateStrings) {
-  p.startDate = dateStrings[0];
-  p.endDate = dateStrings[1];
-}
-const params = {
-  keywords: undefined, //关键字查询
-  page: 1,
-  pageSize: 10,
-  startDate: undefined,
-  endDate: undefined,
-};
+
+const params = {pageSize: 10, page: 1, total: 0, username: '', logType: '', description: ''}
 // 查询表单form
-const p = reactive({...params});
+let p = reactive({...params});
 // 表格加载loading
 const tableLoading = ref(false);
 // 表格数据
@@ -173,16 +164,21 @@ const total = ref(0);
 const addUpdate = ref()
 const query = ref({})
 
+const createDateRange = ref([]);
+const defaultChooseTimeRange = defaultTimeRanges;
+// 时间变动
+function changeCreateDate(dates, dateStrings) {
+  p.startDate = dateStrings[0];
+  p.endDate = dateStrings[1];
+}
+
+
 // 重置查询条件
 function resetQuery() {
   let pageSize = p.pageSize;
   Object.assign(p, params);
   p.pageSize = pageSize;
   f5();
-}
-
-function exportFile() {
-  base.download("/log/export", p.value)
 }
 
 // 查询数据
@@ -203,13 +199,14 @@ const router = useRouter();
 
 onMounted(() => {
   query.value = router.currentRoute.value.query;
-  p.value = {...params, ...router.currentRoute.value.query}
   f5()
 })
 
-// ---------------------------- 添加/修改 ----------------------------
-const formRef = ref();
+function exportFile() {
+  base.download("/log/export", p.value)
+}
 
+// ---------------------------- 添加/修改 ----------------------------
 function update(row) {
   addUpdate.value.open(row, query.value);
 }

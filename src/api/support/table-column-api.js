@@ -21,6 +21,6 @@ export const tableColumnApi = {
 
   // 删除表格列 @author zhuoda
   deleteColumns: (tableId) => {
-    return getRequest(`/support/tableColumn/delete/${tableId}`);
+    return getRequest(`/tableColumn/delete/${tableId}`);
   },
 };
