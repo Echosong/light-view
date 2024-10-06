@@ -11,7 +11,7 @@
 <template>
   <div style="overflow: auto">
     <a-checkbox-group v-model:value="checkedData">
-      <div class="checked-box">
+      <div class="checked-box" style="min-width: 50%">
         <ul>
           <!--li 菜单模块 start-->
           <RoleTreeMenu :tree="props.tree" :index="0" />
