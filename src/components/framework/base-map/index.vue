@@ -6,43 +6,50 @@
       :options="options"
       :filter-option="filterOption"
       @change="selectTo"
-      :disabled = "props.disabled"
+      allowClear
+      :disabled="props.disabled"
   ></a-select>
 </template>
 <script setup>
-import { ref } from "@vue/runtime-core";
-import { onMounted } from "vue";
+import {ref} from "@vue/runtime-core";
+import {nextTick, onMounted, watch} from "vue";
 import {base} from "/@/utils/base";
 
 const changeValue = ref(0)
 const options = ref([])
 const props = defineProps({
-  indexId: { default: ''},
+  modelValue: {type: Number, default: 0},
   routeName: {default: ""},
   type: {default: 0},
   disabled: {default: false}
 })
 
-onMounted(async () => {
-  const {data} = await base.get("/"+props.routeName+"/getMap?type="+props.type);
-  data.forEach(item => {
-    options.value.push({
-      value: item.code,
-      label: item.name
+onMounted(() => {
+  nextTick(async () => {
+    const {data} = await base.get("/"+props.routeName+"/getMap?type=" + props.type);
+    let ops = [];
+    data.forEach(item => {
+      ops.push({
+        key: item.id,
+        value: parseInt(item.id),
+        label: item.name
+      })
     })
+    options.value = ops;
+    changeValue.value = parseInt(props.modelValue|| ops[0].value);
   })
-  changeValue.value = parseInt(props.modelValue || 10000);
+
 })
 
 const filterOption = (input, option) => {
-  return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+  return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
 
 const emits = defineEmits(['update:modelValue'])
 
+
 function selectTo() {
-  let selectValue = changeValue.value === 10000 ? null : changeValue.value;
-  emits('update:modelValue', selectValue);
+  emits('update:modelValue', changeValue.value);
 }
 
 </script>
