@@ -8,7 +8,7 @@
       @change="handleChange"
       @preview="handlePreview"
   >
-    <div>
+    <div v-if="fileList.length < maxCount">
       <plus-outlined />
     </div>
   </a-upload>
