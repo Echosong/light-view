@@ -12,7 +12,7 @@ import { getRequest, postRequest } from '/src/lib/axios';
 
 export const employeeApi = {
   /**
-   * 查询所有员工 @author 卓大
+   * 查询所有员工 @author Echosong
    */
   queryAll: () => {
     return getRequest('/employee/queryAll');

@@ -11,28 +11,28 @@ import { getRequest, postRequest } from '/src/lib/axios';
 
 export const loginApi = {
   /**
-   * 登录 @author 卓大
+   * 登录 @author Echosong
    */
   login: (param) => {
     return postRequest('/user/login', param);
   },
 
   /**
-   * 退出登录 @author 卓大
+   * 退出登录 @author Echosong
    */
   logout: () => {
     return getRequest('/user/logout');
   },
 
   /**
-   * 获取验证码 @author 卓大
+   * 获取验证码 @author Echosong
    */
   getCaptcha: () => {
     return getRequest('/user/captcha');
   },
 
   /**
-   * 获取登录信息 @author 卓大
+   * 获取登录信息 @author Echosong
    */
   getLoginInfo: () => {
     return getRequest('/user/getLoginInfo');

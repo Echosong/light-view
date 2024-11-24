@@ -11,27 +11,27 @@ import { getRequest, postRequest } from '/src/lib/axios';
 
 export const departmentApi = {
   /**
-   * 查询部门列表 @author 卓大
+   * 查询部门列表 @author Echosong
    */
   queryAllDepartment: () => {
     return getRequest('/department/listAll');
   },
 
   /**
-   * 查询部门树形列表 @author 卓大
+   * 查询部门树形列表 @author Echosong
    */
   queryDepartmentTree: () => {
     return getRequest('/department/treeList');
   },
 
   /**
-   * 添加部门 @author 卓大
+   * 添加部门 @author Echosong
    */
   addDepartment: (param) => {
     return postRequest('/department/add', param);
   },
   /**
-   * 更新部门信息 @author 卓大
+   * 更新部门信息 @author Echosong
    */
   updateDepartment: (param) => {
     return postRequest('/department/update', param);

@@ -10,11 +10,11 @@
 import { postRequest, getRequest } from '/src/lib/axios';
 
 export const operateLogApi = {
-  // 分页查询 @author 卓大
+  // 分页查询 @author Echosong
   queryList: (param) => {
     return postRequest('/support/operateLog/page/query', param);
   },
-  // 详情 @author 卓大
+  // 详情 @author Echosong
   detail: (id) => {
     return getRequest(`/support/operateLog/detail/${id}`);
   },

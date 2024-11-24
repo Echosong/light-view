@@ -10,14 +10,14 @@
 import { postRequest, getRequest, getDownload } from '/src/lib/axios';
 
 export const fileApi = {
-  // 文件上传 @author 卓大
+  // 文件上传 @author Echosong
   uploadUrl: '/support/file/upload',
   uploadFile: (param, folder) => {
     return postRequest(`/support/file/upload?folder=${folder}`, param);
   },
 
   /**
-   * 分页查询  @author 卓大
+   * 分页查询  @author Echosong
    */
   queryPage: (param) => {
     return postRequest('/support/file/queryPage', param);
