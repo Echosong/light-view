@@ -1,5 +1,8 @@
 #light-view
 
+### 配合 Light Admin 生成代码
+
+
 ### 第一阶段目标
 
 1. 完成自动生成 list（列表页面） list.vue
