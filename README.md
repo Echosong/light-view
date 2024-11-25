@@ -52,4 +52,9 @@ npm run build:prod
 > 生成代码时候不需要生成对应的 add.vue  和 list.vue 利用公共的模板
 
 
+### 后端项目
+
+此项目为 轻巧之光（lightAdmin） 前端项目，其后端项目地址为 [light-admin](https://github.com/Echosong/light)
+
+
 
