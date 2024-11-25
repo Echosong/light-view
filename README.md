@@ -1,5 +1,28 @@
 #light-view
 
+### 部署
+根目录下执行，安装依赖包 node 版本 v18+
+
+```shell
+npm install
+```
+开发环境运行 配置接口
+```ts
+NODE_ENV=development
+VITE_APP_TITLE='LightAdmin'
+VITE_APP_API_URL='http://localhost:2034/'
+```
+开发环境运行
+```shell
+npm run dev
+```
+生产环境打包
+```shell
+npm run build:prod
+```
+
+
+
 ### 配合 Light Admin 生成代码
 
 
