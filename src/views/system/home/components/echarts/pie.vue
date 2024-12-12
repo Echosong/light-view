@@ -16,8 +16,8 @@
   });
 
   async function init() {
-    const  st = await base.get('/member/statistic/num')
-    const stData = st.data;
+
+    const stData = {num:100,manNum:50,womanNum:50};
     let option = {
       tooltip: {
         trigger: 'item',

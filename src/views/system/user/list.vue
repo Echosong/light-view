@@ -123,7 +123,7 @@ const columns = ref([{"title": "账号", "dataIndex": "username", "ellipsis": tr
   "dataIndex": "action",
   "ellipsis": true,
   "align": "left",
-  "width": 90,
+  "width": 150,
   "fixed": "right"
 }]);
 
@@ -152,7 +152,7 @@ function resetQuery() {
 function resetPassword(row){
   base.confirm('是否重置密码，此操作不可撤销', async function () {
     let res = await base.get("/user/resetPassword/"+ row.id);
-    base.success(res.message + "，密码为::"+ res.data,);
+    base.success(res.data);
     f5();
   })
 }

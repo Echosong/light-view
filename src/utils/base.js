@@ -36,7 +36,7 @@ export const base = {
         Modal.confirm({
             title: '提示',
             content: msg,
-            okText: '删除',
+            okText: '确定',
             okType: 'danger',
             onOk() {
                callback();

@@ -18,7 +18,27 @@ onMounted(() => {
 });
 
 async function init() {
-  const  st = await base.get('/product/statistic/category')
+  const  st = {
+    "data": [
+      {
+        "cateId": 3,
+        "name": "健康产业",
+        "value": 10
+      },
+      {
+        "cateId": 5,
+        "name": "低碳旅游",
+        "value": 1
+      },
+      {
+        "cateId": 0,
+        "name": "供应商测试品类",
+        "value": 0
+      }
+    ],
+    "code": 200,
+    "message": "成功"
+  }
   let option = {
     tooltip: {
       trigger: 'item',

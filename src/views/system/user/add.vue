@@ -14,7 +14,7 @@
       <a-form-item label="手机号" prop="mobile" v-if="!query.mobile">
         <a-input v-model:value="m.mobile"></a-input>
       </a-form-item>
-      <a-form-item label="密码" prop="password" v-if="!query.password">
+      <a-form-item label="密码" prop="password" v-if="!m.id">
         <a-input v-model:value="m.password"></a-input>
       </a-form-item>
       <a-form-item label="性别" v-if="!query.sex">
