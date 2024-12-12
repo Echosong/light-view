@@ -25,7 +25,6 @@
 <script setup>
   import { ref, reactive } from 'vue';
   import { message } from 'ant-design-vue';
-  import { employeeApi } from '/src/api/system/employee-api';
   import { SmartLoading } from '/@/components/framework/smart-loading';
   import { smartSentry } from '/@/lib/smart-sentry';
 
