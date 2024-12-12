@@ -80,7 +80,6 @@
 <script setup>
   import { message } from 'ant-design-vue';
   import { computed, reactive, ref } from 'vue';
-  import { employeeApi } from '/src/api/system/employee-api';
   import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '/@/constants/common-const';
   import DepartmentTreeSelect from '/@/components/system/department-tree-select/index.vue';
   import { smartSentry } from '/@/lib/smart-sentry';
