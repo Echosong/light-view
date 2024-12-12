@@ -74,6 +74,7 @@
         <template v-if="column.dataIndex === 'action'">
           <div class="smart-table-operate">
             <a-button @click="update(record)" type="link">编辑</a-button>
+            <a-button @click="resetPassword(record)" type="link">重置密码</a-button>
             <a-button @click="del(record)" danger type="link">删除</a-button>
           </div>
         </template>
@@ -146,6 +147,14 @@ function resetQuery() {
   Object.assign(p, params);
   p.pageSize = pageSize;
   f5();
+}
+
+function resetPassword(row){
+  base.confirm('是否重置密码，此操作不可撤销', async function () {
+    let res = await base.get("/user/resetPassword/"+ row.id);
+    base.success(res.message + "，密码为::"+ res.data,);
+    f5();
+  })
 }
 
 // 查询数据
